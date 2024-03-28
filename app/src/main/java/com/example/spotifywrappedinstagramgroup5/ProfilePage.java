@@ -5,8 +5,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 /**
@@ -15,6 +21,12 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ProfilePage extends Fragment {
 
     private RecyclerView recyclerView;
+
+    FirebaseAuth auth;
+    Button button;
+    TextView textView;
+
+    FirebaseUser user;
 
     /**
      * Required empty public constructor.
@@ -33,6 +45,10 @@ public class ProfilePage extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
         }
+
+        auth = FirebaseAuth.getInstance();
+
+
     }
 
     @Override
