@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "996681450277",
+    "project_id": "spotifywrappedinstagram",
+    "storage_bucket": "spotifywrappedinstagram.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:996681450277:android:5576c91df70988d644d0cc",
+        "android_client_info": {
+          "package_name": "com.example.spotifywrappedinstagramgroup5"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkEeLDdklKlxiE3ZDk-1Oy_T3S9jekQJg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
