@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.example.spotifywrappedinstagramgroup5.ProfilePage;
 import com.example.spotifywrappedinstagramgroup5.R.layout;
 import com.example.spotifywrappedinstagramgroup5.databinding.ActivityMainBinding;
 
@@ -33,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
                 com.example.spotifywrappedinstagramgroup5.PostPage schedulePage = new com.example.spotifywrappedinstagramgroup5.PostPage();
                 changeFragment(schedulePage);
             } else if (item.getItemId() == R.id.profile_button) {
-                com.example.spotifywrappedinstagramgroup5.ProfilePage profilePage = new com.example.spotifywrappedinstagramgroup5.ProfilePage();
-                changeFragment(profilePage);
+                Intent intent = new Intent(getApplicationContext(), ProfilePage.class);
+                startActivity(intent);
             }
             return true;
         });
