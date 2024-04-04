@@ -7,6 +7,8 @@ android {
     namespace = "com.example.spotifywrappedinstagramgroup5"
     compileSdk = 34
 
+
+
     defaultConfig {
         applicationId = "com.example.spotifywrappedinstagramgroup5"
         minSdk = 24
