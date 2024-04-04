@@ -7,12 +7,21 @@ android {
     namespace = "com.example.spotifywrappedinstagramgroup5"
     compileSdk = 34
 
+
+
     defaultConfig {
         applicationId = "com.example.spotifywrappedinstagramgroup5"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+
+        addManifestPlaceholders(
+            mapOf(
+                "redirectSchemeName" to "spotifywrappedinstagramgroup5",
+                "redirectHostName" to "auth",
+            )
+        )
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -44,6 +53,8 @@ dependencies {
     implementation("androidx.navigation:navigation-ui:2.7.6")
     implementation("com.google.firebase:firebase-auth:22.3.1")
     implementation("com.google.firebase:firebase-firestore:24.11.0")
+    implementation("com.spotify.android:auth:2.1.1")
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
