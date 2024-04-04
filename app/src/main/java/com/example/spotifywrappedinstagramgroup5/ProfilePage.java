@@ -1,57 +1,82 @@
 package com.example.spotifywrappedinstagramgroup5;
 
-// Android
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ImageView;
 
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import com.example.spotifywrappedinstagramgroup5.databinding.FragmentProfilepageBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Objects;
 
-/**
- * ReminderPage class for the fragment holding the task recycler view.
- */
-public class ProfilePage extends Fragment {
-
-    private RecyclerView recyclerView;
-
+public class ProfilePage extends AppCompatActivity {
+    FragmentProfilepageBinding binding; // Corrected binding class
     FirebaseAuth auth;
-    Button button;
-    TextView textView;
-
     FirebaseUser user;
-
-    /**
-     * Required empty public constructor.
-     */
-    public ProfilePage() {}
-
-
-    public static ProfilePage newInstance(String param1, String param2) {
-        ProfilePage fragment = new ProfilePage();
-        Bundle args = new Bundle();
-        return fragment;
-    }
+//    Button button; (NOT NEEDED ANYMORE CURRENTLY)
+    Toolbar toolbar;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = FragmentProfilepageBinding.inflate(getLayoutInflater()); // Corrected binding initialization
+        setContentView(binding.getRoot());
+//        button = findViewById(R.id.logout_button);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getApplicationContext(), Logout.class);
+//                startActivity(intent);
+//            }
+//        });
+
+        // Initialize Firebase authentication
         auth = FirebaseAuth.getInstance();
 
+        // Set up bottom navigation menu
+        BottomNavigationView bottomMenu = binding.bottomMenu; // Corrected reference to bottom menu
+        bottomMenu.setBackground(null); // Set background to null if needed
+        binding.bottomMenu.setBackground(null);
+        binding.bottomMenu.setOnItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.home_button) {
+                Intent intent = new Intent(getApplicationContext(), HomePage.class);
+                startActivity(intent);
+                overridePendingTransition(0, 0);
+                return true;
+            } else if (item.getItemId() == R.id.search_button) {
+                Intent intent = new Intent(getApplicationContext(), SearchPage.class);
+                startActivity(intent);
+                overridePendingTransition(0, 0);
+                return true;
+            } else if (item.getItemId() == R.id.post_button) {
+                Intent intent = new Intent(getApplicationContext(), PostPage.class);
+                startActivity(intent);
+                overridePendingTransition(0, 0);
+                return true;
+            }
+            return true;
+        });
+        toolbar = findViewById(R.id.profile_top_bar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
+        ImageView imageView = findViewById(R.id.three_dot_extension);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle overflow menu click
+                // For example, navigate to SettingsActivity
+                Intent intent = new Intent(ProfilePage.this, Logout.class);
+                startActivity(intent);
+            }
+        });
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profilepage, container, false);
-    }
 }
