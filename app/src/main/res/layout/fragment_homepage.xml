@@ -13,10 +13,6 @@
         android:layout_height="840dp">
 
     </FrameLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="HOMEPAGE" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_menu"
@@ -32,5 +28,9 @@
 
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
+    <include
+        layout="@layout/home_top"/>
+
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
