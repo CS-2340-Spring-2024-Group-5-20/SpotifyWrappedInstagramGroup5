@@ -1,43 +1,52 @@
 package com.example.spotifywrappedinstagramgroup5;
 
-// Android
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
+import android.view.MenuItem;
 
-/**
- * ReminderPage class for the fragment holding the task recycler view.
- */
-public class SearchPage extends Fragment {
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import com.example.spotifywrappedinstagramgroup5.databinding.FragmentSearchpageBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
-    private RecyclerView recyclerView;
-
-    /**
-     * Required empty public constructor.
-     */
-    public SearchPage() {}
-
-
-    public static SearchPage newInstance(String param1, String param2) {
-        SearchPage fragment = new SearchPage();
-        Bundle args = new Bundle();
-        return fragment;
-    }
+public class SearchPage extends AppCompatActivity {
+    FragmentSearchpageBinding binding; // Corrected binding class
+    FirebaseAuth auth;
+    FirebaseUser user;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
-    }
+        binding = FragmentSearchpageBinding.inflate(getLayoutInflater()); // Corrected binding initialization
+        setContentView(binding.getRoot());
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_searchpage, container, false);
+        // Initialize Firebase authentication
+        auth = FirebaseAuth.getInstance();
+
+        // Set up bottom navigation menu
+        BottomNavigationView bottomMenu = binding.bottomMenu; // Corrected reference to bottom menu
+        bottomMenu.setBackground(null); // Set background to null if needed
+        binding.bottomMenu.setBackground(null);
+        binding.bottomMenu.setOnItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.post_button) {
+                Intent intent = new Intent(getApplicationContext(), PostPage.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+                return true;
+            } else if (item.getItemId() == R.id.home_button) {
+                Intent intent = new Intent(getApplicationContext(), HomePage.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+                return true;
+            } else if (item.getItemId() == R.id.profile_button) {
+                Intent intent = new Intent(getApplicationContext(), ProfilePage.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+                return true;
+            }
+            return true;
+        });
     }
 }
