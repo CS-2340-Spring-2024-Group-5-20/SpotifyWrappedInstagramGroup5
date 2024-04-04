@@ -4,31 +4,38 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.example.spotifywrappedinstagramgroup5.databinding.FragmentProfilepageBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Objects;
+
 public class ProfilePage extends AppCompatActivity {
     FragmentProfilepageBinding binding; // Corrected binding class
     FirebaseAuth auth;
     FirebaseUser user;
-    Button button;
+//    Button button; (NOT NEEDED ANYMORE CURRENTLY)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = FragmentProfilepageBinding.inflate(getLayoutInflater()); // Corrected binding initialization
         setContentView(binding.getRoot());
-        button = findViewById(R.id.logout_button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Logout.class);
-                startActivity(intent);
-            }
-        });
+//        button = findViewById(R.id.logout_button);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getApplicationContext(), Logout.class);
+//                startActivity(intent);
+//            }
+//        });
 
         // Initialize Firebase authentication
         auth = FirebaseAuth.getInstance();
@@ -56,7 +63,20 @@ public class ProfilePage extends AppCompatActivity {
             }
             return true;
         });
+        toolbar = findViewById(R.id.profile_top_bar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
+        ImageView imageView = findViewById(R.id.three_dot_extension);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle overflow menu click
+                // For example, navigate to SettingsActivity
+                Intent intent = new Intent(ProfilePage.this, Logout.class);
+                startActivity(intent);
+            }
+        });
     }
 
 }

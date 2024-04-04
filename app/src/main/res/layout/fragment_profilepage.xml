@@ -13,10 +13,7 @@
         android:layout_height="840dp">
 
     </FrameLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="PROFILEPAGE" />
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_menu"
@@ -33,10 +30,13 @@
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
-    <Button
-        android:id="@+id/logout_button"
-        android:layout_width="300dp"
-        android:layout_height="45dp"
-        android:text="Button"/>
+<!--    <Button-->
+<!--        android:id="@+id/logout_button"-->
+<!--        android:layout_width="300dp"-->
+<!--        android:layout_height="45dp"-->
+<!--        android:text="Button"/>-->
+
+    <include
+        layout="@layout/profile_top"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
