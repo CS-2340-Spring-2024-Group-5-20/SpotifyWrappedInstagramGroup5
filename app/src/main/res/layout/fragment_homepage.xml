@@ -7,13 +7,6 @@
     android:background="@drawable/ui_background"
     tools:context=".fragment_homepage">
 
-    <FrameLayout
-        android:id="@+id/frame_layout"
-        android:layout_width="match_parent"
-        android:layout_height="840dp">
-
-    </FrameLayout>
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_menu"
         android:layout_width="match_parent"
@@ -31,6 +24,116 @@
     <include
         layout="@layout/home_top"/>
 
+    <FrameLayout
+        android:id="@+id/frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="840dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="55dp"
+            tools:ignore="UselessParent" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    app:cardElevation="5dp"
+                    app:cardCornerRadius="5dp"
+                    app:cardBackgroundColor="@color/white">
+
+                    <ImageView
+                        android:layout_width="1in"
+                        android:layout_height="1in"
+                        android:layout_margin="5dp"
+                        android:background="@color/white"
+                        android:elevation="3dp"
+                        tools:ignore="InOrMmUsage"
+                        android:src="@color/black"/>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    app:cardElevation="5dp"
+                    app:cardCornerRadius="5dp"
+                    app:cardBackgroundColor="@color/white">
+
+                    <ImageView
+                        android:layout_width="1in"
+                        android:layout_height="1in"
+                        android:layout_margin="5dp"
+                        android:background="@color/white"
+                        android:elevation="3dp"
+                        tools:ignore="InOrMmUsage"
+                        android:src="@color/black"/>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    app:cardElevation="5dp"
+                    app:cardCornerRadius="5dp"
+                    app:cardBackgroundColor="@color/white">
+
+                    <ImageView
+                        android:layout_width="1in"
+                        android:layout_height="1in"
+                        android:layout_margin="5dp"
+                        android:background="@color/white"
+                        android:elevation="3dp"
+                        tools:ignore="InOrMmUsage"
+                        android:src="@color/black"/>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    app:cardElevation="5dp"
+                    app:cardCornerRadius="5dp"
+                    app:cardBackgroundColor="@color/white">
+
+                    <ImageView
+                        android:layout_width="1in"
+                        android:layout_height="1in"
+                        android:layout_margin="5dp"
+                        android:background="@color/white"
+                        android:elevation="3dp"
+                        tools:ignore="InOrMmUsage"
+                        android:src="@color/black"/>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    app:cardElevation="5dp"
+                    app:cardCornerRadius="5dp"
+                    app:cardBackgroundColor="@color/white">
+
+                    <ImageView
+                        android:layout_width="1in"
+                        android:layout_height="1in"
+                        android:layout_margin="5dp"
+                        android:background="@color/white"
+                        android:elevation="3dp"
+                        tools:ignore="InOrMmUsage"
+                        android:src="@color/black"/>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+        </ScrollView>
+
+    </FrameLayout>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
