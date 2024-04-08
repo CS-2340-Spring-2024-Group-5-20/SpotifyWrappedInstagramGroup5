@@ -105,10 +105,22 @@ public class Register extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(Register.this, "Account created.", Toast.LENGTH_SHORT).show();
                                     userID = mAuth.getCurrentUser().getUid();
+
+//
                                     Map<String, Object> data = new HashMap<>();
                                     data.put("Username", email); //initializes default username to be user's email
                                     data.put("UUID", userID); // creates UUID field within document for query purposes
                                     data.put("Wraps", new ArrayList<>()); // initializes initial array of wraps to be empty.
+                                    //the wraps arraylist will be where the user puts their wraps
+                                    data.put("Followers", new ArrayList<>()); // initializes initial array of followers to be empty.
+                                    //the followers arraylist will contain UUID's and Usernames of all followers (tentative)
+                                    data.put("FavesGenresAndArtists", new ArrayList<>()); //Arraylist of the users favorite genres and artists
+                                    //has to be both in one arraylist because app crashes if i add another arraylist
+                                    data.put("FaveSongs", new ArrayList<>()); // arraylist containing user's top 3 songs
+
+
+//                                  data.put("FaveGenres", new ArrayList<>()); // does not work with this array added
+
 
                                     mStore.collection("UserData").document(userID)
                                     .set(data)
@@ -120,15 +132,7 @@ public class Register extends AppCompatActivity {
                                             });
                                     CollectionReference userDataReference = mStore.collection("Userdata"); // reference to Userdata collection
                                     Query query = userDataReference.whereEqualTo("Username", email); // query to search for documents in the collection where username field matches email
-                                            mStore.collection("UserData")
-                                            .whereEqualTo("Username", true) //i was messing around this doesnt make sense
-                                            .get()
-                                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-                                                }
-                                            });
 
 
 
