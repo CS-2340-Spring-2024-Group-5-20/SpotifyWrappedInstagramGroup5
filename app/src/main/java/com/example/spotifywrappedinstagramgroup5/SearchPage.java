@@ -105,32 +105,56 @@ public class SearchPage extends AppCompatActivity {
 
 
 
-    /**
-     * Method to search for profiles after user inputs profile username.
-     * @param user username to search for
-     * @return a single capacity string array containing the UUID of the user's profile which was searched for.
-     */
-    private void searchForUser(String user, final Callback callback) {
-        DocumentReference docRef = mStore.collection("UserData").document(user);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot doc = task.getResult();
-                    if (doc.exists()) {
-                        String uuid = doc.getString("Username");
-                        callback.onSuccess(uuid); // Display user in some manner
-                    } else {
-                        callback.onNotFound(); // Notify caller that user was not found
+//    /**
+//     * Method to search for profiles after user inputs profile username.
+//     * @param user username to search for
+//     */
+//    private void searchForUser(String user, final Callback callback) {
+//        DocumentReference docRef = mStore.collection("UserData").document(user);
+//        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    DocumentSnapshot doc = task.getResult();
+//                    if (doc.exists()) {
+//                        String uuid = doc.getString("Username");
+//                        callback.onSuccess(uuid); // Display user in some manner
+//                    } else {
+//                        callback.onNotFound(); // Notify caller that user was not found
+//
+//                    }
+//                } else {
+//                    callback.onError(task.getException()); // Notify caller of error
+//                }
+//            }
+//
+//        });
+//    }
 
+    private void searchForUser(String username, final Callback callback) {
+        mStore.collection("UserData")
+                .whereEqualTo("Username", username)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            QuerySnapshot querySnapshot = task.getResult();
+                            if (querySnapshot != null && !querySnapshot.isEmpty()) {
+                                // If there's at least one document found
+                                DocumentSnapshot doc = querySnapshot.getDocuments().get(0); // Assuming there's only one matching document
+                                String uuid = doc.getString("UUID");
+                                callback.onSuccess(uuid);
+                            } else {
+                                callback.onNotFound();
+                            }
+                        } else {
+                            callback.onError(task.getException());
+                        }
                     }
-                } else {
-                    callback.onError(task.getException()); // Notify caller of error
-                }
-            }
-
-        });
+                });
     }
+
 
     // Define a callback interface
     interface Callback {
