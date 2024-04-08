@@ -1,15 +1,27 @@
 package com.example.spotifywrappedinstagramgroup5;
 
+import static android.content.ContentValues.TAG;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.spotifywrappedinstagramgroup5.databinding.FragmentSearchpageBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.UUID;
 
 public class SearchPage extends AppCompatActivity {
     FragmentSearchpageBinding binding; // Corrected binding class
@@ -48,5 +60,34 @@ public class SearchPage extends AppCompatActivity {
             }
             return true;
         });
+    }
+    FirebaseFirestore mStore = FirebaseFirestore.getInstance();
+
+    /**
+     * Method to search for profiles after user inputs profile username.
+     * @param user username to search for
+     * @return a single capacity string array containing the UUID of the user's profile which was searched for.
+     */
+    private String[] searchForUser(String user) {
+        final String[] ret = new String[1];
+
+        DocumentReference docRef = mStore.collection("Userdata").document(user);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    if (doc.exists()) {
+                        ret[0] = doc.getString("UUID");
+
+                    }else {
+                        Log.d(TAG, "No such document");
+                    }
+                } else {
+                    Log.d(TAG,"get failed with ",task.getException());
+                }
+            }
+        });
+        return ret;
     }
 }

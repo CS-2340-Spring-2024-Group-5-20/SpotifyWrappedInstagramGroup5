@@ -22,9 +22,13 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -101,15 +105,32 @@ public class Register extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(Register.this, "Account created.", Toast.LENGTH_SHORT).show();
                                     userID = mAuth.getCurrentUser().getUid();
-//                                    DocumentReference documentReference = mStore.collection("users").document(userID);
-//                                    Map<String, Object> user = new HashMap<>();
-//                                    user.put("userEmail", editTextEmail);
-//                                    documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                        @Override
-//                                        public void onSuccess(Void unused) {
-//                                            Log.d(TAG, "onSuccess: User profile is created." + userID);
-//                                        }
-//                                    });
+                                    Map<String, Object> data = new HashMap<>();
+                                    data.put("Username", email); //initializes default username to be user's email
+                                    data.put("UUID", userID); // creates UUID field within document for query purposes
+                                    data.put("Wraps", new ArrayList<>()); // initializes initial array of wraps to be empty.
+
+                                    mStore.collection("UserData").document(userID)
+                                    .set(data)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Log.d(TAG, "Document successfully written.");
+                                                }
+                                            });
+                                    CollectionReference userDataReference = mStore.collection("Userdata"); // reference to Userdata collection
+                                    Query query = userDataReference.whereEqualTo("Username", email); // query to search for documents in the collection where username field matches email
+                                            mStore.collection("UserData")
+                                            .whereEqualTo("Username", true) //i was messing around this doesnt make sense
+                                            .get()
+                                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                                                }
+                                            });
+
+
 
                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                     startActivity(intent);
