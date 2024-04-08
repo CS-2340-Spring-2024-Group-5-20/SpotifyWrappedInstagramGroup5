@@ -26,10 +26,51 @@
         app:labelVisibilityMode="labeled"
         app:menu="@menu/bottom">
 
-
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
     <include
         layout="@layout/post_top"/>
+
+    <!-- Add your post content here -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <!-- EditText Box -->
+        <EditText
+            android:id="@+id/edit_text_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@color/white"
+            android:hint="Write something..."
+            android:padding="10dp"
+            android:textSize="16sp"
+            android:minLines="5"
+            android:gravity="top" />
+        <Button
+            android:id="@+id/button_add_media"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="16dp"
+            android:background="@android:color/white"
+            android:text="SPOTIFY WRAP GOES HERE IGNORE"
+            android:textColor="@android:color/white" />
+
+        <!-- Post Button Box -->
+        <Button
+            android:id="@+id/button_post"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/light_blue"
+            android:text="Post"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
