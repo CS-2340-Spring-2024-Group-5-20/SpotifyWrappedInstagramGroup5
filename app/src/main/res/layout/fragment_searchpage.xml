@@ -5,14 +5,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ui_background"
-    tools:context=".MainActivity">
+    tools:context=".fragment_searchpage">
 
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
-        android:layout_height="840dp">
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:layout_marginTop="75dp"
+        android:layout_marginBottom="100dp">
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/search_button"
+                android:layout_marginTop="5dp"
+                android:padding="8dp"
+                android:hint="Search"
+                android:drawablePadding="8dp"
+                android:background="@drawable/search_button_style"/>
+        </LinearLayout>
     </FrameLayout>
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_menu"
@@ -26,6 +46,10 @@
         app:labelVisibilityMode="labeled"
         app:menu="@menu/bottom">
 
+
     </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+    <include
+        layout="@layout/search_top"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
