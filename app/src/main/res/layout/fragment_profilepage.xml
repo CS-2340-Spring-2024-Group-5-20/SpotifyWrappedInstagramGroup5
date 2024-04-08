@@ -71,7 +71,7 @@
                         android:textStyle="bold" />
 
                     <Button
-                        android:id="@+id/button"
+                        android:id="@+id/edit_profile_button"
                         android:layout_marginStart="10dp"
                         android:layout_width="141dp"
                         android:layout_height="40dp"

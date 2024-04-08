@@ -13,11 +13,11 @@
         android:theme="@style/Theme.SpotifyWrappedInstagramGroup5"
         tools:targetApi="31">
         <activity
-            android:name=".SearchPage"/>
-        <activity
-            android:name=".HomePage"/>
-        <activity
-            android:name=".PostPage"/>
+            android:name=".EditProfile"
+            android:exported="false" />
+        <activity android:name=".SearchPage" />
+        <activity android:name=".HomePage" />
+        <activity android:name=".PostPage" />
         <activity
             android:name=".ProfilePage"
             android:exported="false" />
@@ -26,9 +26,11 @@
             android:exported="false" />
         <activity
             android:name=".SpotifyLogin"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
-                <data android:host="auth" android:scheme="spotifywrappedinstagramgroup5"/>
+                <data
+                    android:host="auth"
+                    android:scheme="spotifywrappedinstagramgroup5" />
             </intent-filter>
         </activity>
         <activity
@@ -54,7 +56,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
-                <data android:host="auth" android:scheme="spotifywrappedinstagramgroup5"/>
+                <data
+                    android:host="auth"
+                    android:scheme="spotifywrappedinstagramgroup5" />
             </intent-filter>
         </activity>
     </application>
