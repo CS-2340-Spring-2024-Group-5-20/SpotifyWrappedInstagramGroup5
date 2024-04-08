@@ -4,9 +4,12 @@ import static android.content.ContentValues.TAG;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -41,7 +44,6 @@ public class SearchPage extends AppCompatActivity {
         userSearch = findViewById(R.id.search_button);
 
 
-
         // Initialize Firebase authentication
         auth = FirebaseAuth.getInstance();
 
@@ -53,50 +55,53 @@ public class SearchPage extends AppCompatActivity {
             if (item.getItemId() == R.id.post_button) {
                 Intent intent = new Intent(getApplicationContext(), PostPage.class);
                 startActivity(intent);
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
                 return true;
             } else if (item.getItemId() == R.id.home_button) {
                 Intent intent = new Intent(getApplicationContext(), HomePage.class);
                 startActivity(intent);
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
                 return true;
             } else if (item.getItemId() == R.id.profile_button) {
                 Intent intent = new Intent(getApplicationContext(), ProfilePage.class);
                 startActivity(intent);
-                overridePendingTransition(0,0);
+                overridePendingTransition(0, 0);
                 return true;
             }
             return true;
         });
 
-        userSearch.setOnClickListener(new View.OnClickListener() {
+        userSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void onClick(View v) {
-                String userNameSearch = String.valueOf(userSearch.getText());
-                String found;
-                searchForUser(userNameSearch, new Callback() {
-                    @Override
-                    public void onSuccess(String username) {
-//                        found = username; //do something
-                    }
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+                        (event != null && event.getAction() == KeyEvent.ACTION_DOWN &&
+                                event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                    // Perform search operation
+                    String userNameSearch = String.valueOf(userSearch.getText());
+                    searchForUser(userNameSearch, new Callback() {
+                        @Override
+                        public void onSuccess(String username) {
+                            Toast.makeText(SearchPage.this, String.format("User %s.", username), Toast.LENGTH_SHORT).show();
+                        }
 
-                    @Override
-                    public void onNotFound() {
-                        Toast.makeText(SearchPage.this, "User not found.", Toast.LENGTH_SHORT).show();
+                        @Override
+                        public void onNotFound() {
+                            Toast.makeText(SearchPage.this, "User not found.", Toast.LENGTH_SHORT).show();
+                        }
 
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        //hopefully will not throw an error
-                    }
-                });
+                        @Override
+                        public void onError(Exception e) {
+                            // Handle error if needed
+                        }
+                    });
+                    return true; // Consume the event
+                }
+                return false; // Allow other listeners to handle the event
             }
         });
-
-
     }
-    FirebaseFirestore mStore = FirebaseFirestore.getInstance();
+        FirebaseFirestore mStore = FirebaseFirestore.getInstance();
 
 
 
@@ -106,7 +111,7 @@ public class SearchPage extends AppCompatActivity {
      * @return a single capacity string array containing the UUID of the user's profile which was searched for.
      */
     private void searchForUser(String user, final Callback callback) {
-        DocumentReference docRef = mStore.collection("Userdata").document(user);
+        DocumentReference docRef = mStore.collection("UserData").document(user);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -123,6 +128,7 @@ public class SearchPage extends AppCompatActivity {
                     callback.onError(task.getException()); // Notify caller of error
                 }
             }
+
         });
     }
 
