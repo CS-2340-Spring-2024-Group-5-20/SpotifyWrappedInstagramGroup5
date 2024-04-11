@@ -136,7 +136,7 @@ public class Register extends AppCompatActivity {
 
 
 
-                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    Intent intent = new Intent(getApplicationContext(), SpotifyLogin.class);
                                     startActivity(intent);
                                     finish();
                                 } else {
