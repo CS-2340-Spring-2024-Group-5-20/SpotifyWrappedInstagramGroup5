@@ -90,20 +90,6 @@
 
             </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Favorite Genre"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/text_favorite_genre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Pop, Rock, Jazz"
-                android:textSize="16sp" />
-
             <!-- Favorite Artist -->
             <TextView
                 android:layout_width="match_parent"
