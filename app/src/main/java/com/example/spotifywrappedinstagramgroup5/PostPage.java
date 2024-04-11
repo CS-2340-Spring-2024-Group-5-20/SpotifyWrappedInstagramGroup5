@@ -25,6 +25,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.json.JSONException;
+
 import java.sql.Time;
 import java.util.HashMap;
 import java.util.List;
@@ -133,7 +135,11 @@ public class PostPage extends AppCompatActivity {
 
             if (!content.isEmpty()) {
                 if (manager != null) {
-                    manager.generateWrapped(PostPage.this, 5, selectedTimeFrame, content);
+                    try {
+                        manager.generateWrapped(PostPage.this, 5, selectedTimeFrame, content);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
                 //Toast.makeText(PostPage.this, "Successfully Posted", Toast.LENGTH_SHORT).show();
             } else {
