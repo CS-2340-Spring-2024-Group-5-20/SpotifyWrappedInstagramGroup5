@@ -1,8 +1,11 @@
 package com.example.spotifywrappedinstagramgroup5;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.Activity;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import okhttp3.Call;
@@ -11,15 +14,26 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.spotify.sdk.android.auth.AuthorizationClient;
 import com.spotify.sdk.android.auth.AuthorizationRequest;
 import com.spotify.sdk.android.auth.AuthorizationResponse;
 
+import org.checkerframework.checker.units.qual.A;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -34,14 +48,30 @@ public class SpotifyApiManager {
     private String mAccessToken, mAccessCode;
     private Call mCall;
 
-    public SpotifyApiManager(Activity context, String mAccessCode, String mAccessToken) {
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore mStore;
+    private FirebaseUser user;
+
+    private String userId;
+
+    public SpotifyApiManager(Activity context, String mAccessCode, String mAccessToken, FirebaseFirestore mStore, FirebaseAuth mAuth) {
         if (mAccessToken == null || mAccessCode == null) {
             Logger.log("Access token or code was null");
             throw new RuntimeException("SpotifyAPIManager failed to construct.");
         }
 
+        if (mAuth == null || mStore == null) {
+            throw new RuntimeException("Firebase was not loaded correctly into API manager");
+        }
+
         this.mAccessCode = mAccessCode;
         this.mAccessToken = mAccessToken;
+
+        this.mAuth = mAuth;
+        this.mStore = mStore;
+
+        user = mAuth.getCurrentUser();
+        userId = user.getUid();
     }
 
     /**
@@ -116,11 +146,12 @@ public class SpotifyApiManager {
                 url += "?" + parameters;
             }
 
-            // Create a request to get the user profile
+            // Create a request
             final Request request = new Request.Builder()
                     .url(url)
                     .addHeader("Authorization", "Bearer " + mAccessToken)
                     .build();
+
 
             cancelCall();
             mCall = mOkHttpClient.newCall(request);
@@ -158,22 +189,91 @@ public class SpotifyApiManager {
     }
 
     /**
+     * Creates a UI thread to update a TextView in the background
+     * Reduces UI latency and makes the system perform more consistently
+     *
+     * @param text the text to set
+     * @param textView TextView object to update
+     */
+    private void setTextAsync(final String text, TextView textView) {
+        //runOnUiThread(() -> textView.setText(text));
+    }
+
+    /**
      * Get top tracks
      */
-    public void getTop5Tracks(Activity context, int limit) {
+    public void getTopTracks(Activity context, int limit) throws JSONException {
         String endpoint = "me/top/tracks";
-        String parameters = "limit=5" + limit;
+        String parameters = "limit=" + limit;
         CompletableFuture<JSONArray> result = makeApiCall(context, endpoint, parameters);
         JSONArray tracks = result.join(); // Block and get the result
+
+        List<String> trackNames = new ArrayList<>();
+
+        for (int i = 0; i < tracks.length(); i++) {
+            JSONObject trackObject = tracks.getJSONObject(i);
+            String trackName = trackObject.getString("name");
+            trackNames.add(trackName);
+        }
+
+        HashMap<String, Object> trackData = new HashMap<>();
+        trackData.put("FaveSongs", trackNames);
+
+        mStore.collection("UserData").document(userId)
+                .update(trackData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "Songs successfully written.");
+                    }
+                });
     }
 
     /**
      * Get top artists
      */
-    public void getTop5Artists(Activity context, int limit) {
+    public void getTopArtists(Activity context, int limit) throws JSONException {
         String endpoint = "me/top/artists";
         String parameters = "limit=" + limit;
         CompletableFuture<JSONArray> result = makeApiCall(context, endpoint, parameters);
-        JSONArray artists = result.join(); // Block and get the result
+        JSONArray artistsArray = result.join(); // Block and get the result
+
+        Log.d("test", artistsArray.toString());
+
+        List<String> artistNames = new ArrayList<>();
+
+        for (int i = 0; i < artistsArray.length(); i++) {
+            JSONObject artistObject = artistsArray.getJSONObject(i);
+            String artistName = artistObject.getString("name");
+            artistNames.add(artistName);
+        }
+
+        HashMap<String, Object> artistsData = new HashMap<>();
+        artistsData.put("FaveArtists", artistNames);
+
+        mStore.collection("UserData").document(userId)
+                .update(artistsData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "Document successfully written.");
+                    }
+                });
+
+    }
+
+    public void saveCreds(Activity context) {
+        Map<String, Object> spotifyData = new HashMap<>();
+        spotifyData.put("Spotify Token", mAccessToken);
+        spotifyData.put("Spotify Code", mAccessCode);
+
+        mStore.collection("UserData").document(userId)
+                .update(spotifyData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "Document successfully written.");
+                    }
+                });
     }
 }
