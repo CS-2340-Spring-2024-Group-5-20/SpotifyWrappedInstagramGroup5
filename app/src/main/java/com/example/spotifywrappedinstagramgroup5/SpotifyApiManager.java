@@ -337,9 +337,9 @@ public class SpotifyApiManager {
         wrappedData.put("TopTracks", tracks);
         wrappedData.put("TopGenres", genres);
         wrappedData.put("TopArtists", artists);
+        wrappedData.put("UserId", userId);
 
-
-        mStore.collection("UserData").document(userId).collection("Wraps").document(newWrappedID)
+        mStore.collection("Wraps").document(newWrappedID)
                 .set(wrappedData)
                 .addOnSuccessListener(aVoid -> Log.d(TAG, "Spotify Wrapped successfully saved."))
                 .addOnFailureListener(e -> Log.e(TAG, "Error saving Spotify Wrapped: ", e));

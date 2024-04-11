@@ -141,21 +141,15 @@ public class PostPage extends AppCompatActivity {
                         throw new RuntimeException(e);
                     }
                 }
-                //Toast.makeText(PostPage.this, "Successfully Posted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PostPage.this, "Successfully Posted", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
             } else {
                 // Handle case where EditText is empty
-                //Toast.makeText(PostPage.this, "Post content cannot be empty.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PostPage.this, "Post content cannot be empty.", Toast.LENGTH_SHORT).show();
             }
         });
-//        db.collection("PostTest").document("JSR").set(test).addOnCompleteListener(new OnCompleteListener<Void>() {
-//
-//            @Override
-//            public void onComplete(@NonNull Task<Void> task) {
-//                if (task.isSuccessful()) {
-//                    Toast.makeText(PostPage.this, "Test string added.", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-
     }
 }
