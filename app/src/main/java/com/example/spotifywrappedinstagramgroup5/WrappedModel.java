@@ -20,6 +20,7 @@ public class WrappedModel {
         this.topGenres = topGenres;
         this.topTracks = topTracks;
         this.userId = userId;
+        this.topArtists = topArtists;
     }
 
     public static List<WrappedModel> loadData(FirebaseFirestore mStore, DataCallback callback) {
