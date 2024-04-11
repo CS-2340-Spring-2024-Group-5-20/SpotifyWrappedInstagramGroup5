@@ -104,33 +104,6 @@ public class SearchPage extends AppCompatActivity {
         FirebaseFirestore mStore = FirebaseFirestore.getInstance();
 
 
-
-//    /**
-//     * Method to search for profiles after user inputs profile username.
-//     * @param user username to search for
-//     */
-//    private void searchForUser(String user, final Callback callback) {
-//        DocumentReference docRef = mStore.collection("UserData").document(user);
-//        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    DocumentSnapshot doc = task.getResult();
-//                    if (doc.exists()) {
-//                        String uuid = doc.getString("Username");
-//                        callback.onSuccess(uuid); // Display user in some manner
-//                    } else {
-//                        callback.onNotFound(); // Notify caller that user was not found
-//
-//                    }
-//                } else {
-//                    callback.onError(task.getException()); // Notify caller of error
-//                }
-//            }
-//
-//        });
-//    }
-
     private void searchForUser(String username, final Callback callback) {
         mStore.collection("UserData")
                 .whereEqualTo("Username", username)
@@ -161,6 +134,11 @@ public class SearchPage extends AppCompatActivity {
         void onSuccess(String uuid);
         void onNotFound();
         void onError(Exception e);
+    }
+
+
+    private void addFollower(String uuid) {
+
     }
 
 }
