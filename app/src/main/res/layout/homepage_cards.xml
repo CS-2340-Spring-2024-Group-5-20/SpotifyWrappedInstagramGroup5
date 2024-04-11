@@ -7,19 +7,19 @@
     android:background="@color/white"
     app:cardCornerRadius="5dp"
     app:cardElevation="5dp"
-    app:layout_margin="5dp">
+    app:layout_goneMarginStart="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_margin="5dp">
+        android:layout_marginStart="5dp">
 
         <ImageView
             android:id="@+id/image_post"
             android:layout_width="175dp"
             android:layout_height="175dp"
-            android:layout_margin="5dp"
+            android:layout_marginStart="5dp"
             android:background="@color/white"
             android:elevation="3dp"
             android:src="@color/black"/>
@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginLeft="10dp">
+            android:layout_marginStart="10dp">
 
             <!-- TextView for Username -->
             <TextView
