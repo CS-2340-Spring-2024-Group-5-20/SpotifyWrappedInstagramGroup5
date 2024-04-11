@@ -77,6 +77,15 @@
                         android:layout_height="40dp"
                         android:backgroundTint="@color/light_blue"
                         android:text="Edit Profile" />
+
+                    <Button
+                        android:id="@+id/signout_button"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="141dp"
+                        android:layout_height="40dp"
+                        android:backgroundTint="@color/light_blue"
+                        android:text="Sign Out" />
+
                 </LinearLayout>
 
             </LinearLayout>

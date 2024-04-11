@@ -20,7 +20,7 @@ public class ProfilePage extends AppCompatActivity {
     FragmentProfilepageBinding binding; // Corrected binding class
     FirebaseAuth auth;
 
-    Button editProfileButton;
+    Button editProfileButton, signOutButton;
     FirebaseUser user;
 //    Button button; (NOT NEEDED ANYMORE CURRENTLY)
     Toolbar toolbar;
@@ -81,6 +81,7 @@ public class ProfilePage extends AppCompatActivity {
         });
 
         editProfileButton = findViewById(R.id.edit_profile_button);
+        signOutButton = findViewById(R.id.signout_button);
 
         editProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +90,15 @@ public class ProfilePage extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        signOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SignoutPage.class);
+                startActivity(intent);
+            }
+        });
+
 
 
     }
