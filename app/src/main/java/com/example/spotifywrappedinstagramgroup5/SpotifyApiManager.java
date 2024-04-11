@@ -34,7 +34,9 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Class managing integration with the Spotify API
@@ -137,7 +139,7 @@ public class SpotifyApiManager {
         CompletableFuture<JSONArray> future = new CompletableFuture<>();
 
         if (mAccessToken == null) {
-            Toast.makeText(context, "You need to get an access token first!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "You need to get an access token first!", Toast.LENGTH_SHORT).show();
             future.completeExceptionally(new IOException("Access token was null"));
         } else {
 
@@ -160,8 +162,8 @@ public class SpotifyApiManager {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     Log.d("HTTP", "Failed to fetch data: " + e);
-                    Toast.makeText(context, "Failed to fetch data, watch Logcat for more details",
-                            Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, "Failed to fetch data, watch Logcat for more details",
+                    //        Toast.LENGTH_SHORT).show();
                     future.completeExceptionally(e);
                 }
 
@@ -174,8 +176,8 @@ public class SpotifyApiManager {
                             future.complete(artists); // Complete with the result
                         } catch (JSONException e) {
                             Logger.log("Failed to parse data: " + e);
-                            Toast.makeText(context, "Failed to parse data, watch Logcat for more details",
-                                    Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(context, "Failed to parse data, watch Logcat for more details",
+                             //       Toast.LENGTH_SHORT).show();
                             future.completeExceptionally(e);
                         }
                     } else {
@@ -275,5 +277,56 @@ public class SpotifyApiManager {
                         Log.d(TAG, "Document successfully written.");
                     }
                 });
+    }
+
+    public void generateWrapped(Activity context, int limit, TimeFrame timeFrame, String description) {
+        CompletableFuture<JSONArray> topTracksFuture = makeApiCall(context, "me/top/tracks", "limit=" + limit + "&time_range=" + timeFrame.name());
+        CompletableFuture<JSONArray> topArtistsFuture = makeApiCall(context, "me/top/artists", "limit=" + limit + "&time_range=" + timeFrame.name());
+
+        CompletableFuture<Void> combinedFuture = CompletableFuture.allOf(topTracksFuture, topArtistsFuture);
+
+        combinedFuture.thenRunAsync(() -> {
+            try {
+                // Process top tracks
+                JSONArray topTracks = topTracksFuture.get(); // Note: get() does not block here because it's guaranteed to be complete
+                List<String> trackNames = new ArrayList<>();
+                for (int i = 0; i < topTracks.length(); i++) {
+                    JSONObject track = topTracks.getJSONObject(i);
+                    trackNames.add(track.getString("name"));
+                }
+
+                // Process top artists and deduce genres
+                JSONArray topArtists = topArtistsFuture.get(); // Similar to above, get() does not block here
+                List<String> artistNames = new ArrayList<>();
+                Set<String> genres = new LinkedHashSet<>(); // Use a set to avoid duplicates
+                for (int i = 0; i < topArtists.length(); i++) {
+                    JSONObject artist = topArtists.getJSONObject(i);
+                    artistNames.add(artist.getString("name"));
+                    JSONArray artistGenres = artist.getJSONArray("genres");
+                    for (int j = 0; j < artistGenres.length(); j++) {
+                        genres.add(artistGenres.getString(j));
+                    }
+                }
+
+                // Now update Firestore with the data asynchronously
+                HashMap<String, Object> wrappedData = new HashMap<>();
+                wrappedData.put("TopTracks", trackNames);
+                wrappedData.put("TopArtists", artistNames);
+                wrappedData.put("TopGenres", genres);
+                wrappedData.put("Description", description);
+
+                mStore.collection("UserData").document(userId).collection("Wraps").document(UUID.randomUUID().toString())
+                        .set(wrappedData)
+                        .addOnSuccessListener(aVoid -> Log.d(TAG, "Spotify Wrapped successfully saved."))
+                        .addOnFailureListener(e -> Log.e(TAG, "Error saving Spotify Wrapped: ", e));
+            } catch (Exception e) {
+                // Handle any exceptions (JSONException, InterruptedException, ExecutionException)
+                Log.e(TAG, "Error processing Spotify data: ", e);
+            }
+        }).exceptionally(e -> {
+            // Log and handle any exceptions raised during the processing or future completion
+            Log.e(TAG, "Error in completing future: ", e);
+            return null;
+        });
     }
 }

@@ -52,14 +52,10 @@
             android:textSize="16sp"
             android:minLines="5"
             android:gravity="top" />
-        <Button
-            android:id="@+id/button_add_media"
+        <Spinner
+            android:id="@+id/timeframe_picker"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginBottom="16dp"
-            android:background="@android:color/white"
-            android:text="SPOTIFY WRAP GOES HERE IGNORE"
-            android:textColor="@android:color/white" />
+            android:layout_height="wrap_content"/>
 
         <!-- Post Button Box -->
         <Button

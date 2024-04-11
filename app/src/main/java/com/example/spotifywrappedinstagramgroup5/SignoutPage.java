@@ -14,15 +14,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SignoutPage extends AppCompatActivity {
-
 
     Button signOutButton, backButton, deleteButton;
 
     FirebaseAuth mAuth;
 
-
+    FirebaseFirestore mStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +34,7 @@ public class SignoutPage extends AppCompatActivity {
         deleteButton = findViewById(R.id.delete_button);
 
         mAuth = FirebaseAuth.getInstance();
+        mStore = FirebaseFirestore.getInstance();
 
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,18 +61,19 @@ public class SignoutPage extends AppCompatActivity {
             public void onClick(View v) {
                 FirebaseUser user = mAuth.getCurrentUser();
                 user.delete()
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(SignoutPage.this, "User Profile Deleted", Toast.LENGTH_SHORT).show();
-                                }
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Log.d("Auth", "User account deleted.");
+                                Toast.makeText(SignoutPage.this, "User Profile Deleted", Toast.LENGTH_SHORT).show();
+                                mStore.collection("UserData").document(user.getUid()).delete();
+                            } else {
+                                Toast.makeText(SignoutPage.this, "Log out and Log back in again before deleting", Toast.LENGTH_SHORT).show();
+                                Log.w("Auth", "Failed to delete user account", task.getException());
                             }
                         });
+                Intent intent = new Intent(SignoutPage.this, Login.class);
+                startActivity(intent);
             }
         });
-
-
-
     }
 }
