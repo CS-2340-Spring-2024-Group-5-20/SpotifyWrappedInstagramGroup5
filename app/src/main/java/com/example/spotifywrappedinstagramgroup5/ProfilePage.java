@@ -32,7 +32,7 @@ public class ProfilePage extends AppCompatActivity {
 //    Button button; (NOT NEEDED ANYMORE CURRENTLY)
     Toolbar toolbar;
 
-    TextView favArtist, mostPlayed;
+    TextView favArtist, mostPlayed, username;
     DocumentReference docRef;
 
     @Override
@@ -98,6 +98,9 @@ public class ProfilePage extends AppCompatActivity {
 
         favArtist = findViewById(R.id.text_favorite_artist);
         mostPlayed = findViewById(R.id.text_most_played);
+
+        username = findViewById(R.id.username);
+        username.setText(user != null ? user.getEmail().replace("@gmail.com", "") : "Paul");
 
         docRef.get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
