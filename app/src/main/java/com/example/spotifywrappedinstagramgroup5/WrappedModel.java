@@ -35,7 +35,7 @@ public class WrappedModel {
                         List<String> topArtists = (List<String>) documentSnapshot.get("TopArtists");
                         List<String> topGenres = (List<String>) documentSnapshot.get("TopGenres");
                         List<String> topTracks = (List<String>) documentSnapshot.get("TopTracks");
-                        String userId = mAuth.getCurrentUser().getEmail();
+                        String userId = mAuth.getCurrentUser().getEmail().replace("@gmail.com", "");
 
                         WrappedModel wrappedModel = new WrappedModel(description, topArtists, topGenres, topTracks, userId);
                         wrappedModels.add(wrappedModel);

@@ -38,9 +38,9 @@ public class WrappedModelAdapter extends RecyclerView.Adapter<WrappedModelAdapte
         WrappedModel wrappedModel = wrappedModelList.get(position);
         holder.textUsername.setText(wrappedModel.getUserId()); // Assuming the userId is the username
         holder.textDescription.setText(wrappedModel.getDescription());
-        holder.textTracks.setText(wrappedModel.getTracks());
-        holder.textArtists.setText(wrappedModel.getArtists());
-        holder.textGenres.setText(wrappedModel.getGenres());
+        holder.textTracks.setText(""); //wrappedModel.getTracks()
+        holder.textArtists.setText(""); //wrappedModel.getArtists()
+        holder.textGenres.setText(""); // wrappedModel.getGenres()
 
         holder.imagePost.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -84,7 +84,7 @@ public class EditProfile extends AppCompatActivity {
     }
 
     private void updateEmail(FirebaseUser user, String newEmail) {
-        user.updateEmail(newEmail).addOnCompleteListener(task -> {
+        user.verifyBeforeUpdateEmail(newEmail).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Toast.makeText(EditProfile.this, "Email updated successfully.", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
