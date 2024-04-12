@@ -101,7 +101,7 @@ public class SearchPage extends AppCompatActivity {
             }
         });
     }
-        FirebaseFirestore mStore = FirebaseFirestore.getInstance();
+    FirebaseFirestore mStore = FirebaseFirestore.getInstance();
 
 
 

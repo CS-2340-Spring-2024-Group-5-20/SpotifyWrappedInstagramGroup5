@@ -30,7 +30,15 @@
                 android:hint="Search"
                 android:drawablePadding="8dp"
                 android:background="@drawable/search_button_style"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/search_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
+
     </FrameLayout>
 
 

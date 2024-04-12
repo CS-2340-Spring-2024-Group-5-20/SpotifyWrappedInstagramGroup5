@@ -1,12 +1,15 @@
 package com.example.spotifywrappedinstagramgroup5;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.spotifywrappedinstagramgroup5.R;
@@ -16,6 +19,7 @@ public class WrappedModelAdapter extends RecyclerView.Adapter<WrappedModelAdapte
 
     private List<WrappedModel> wrappedModelList;
     private Context context;
+    private ImageView imageView;
 
     public WrappedModelAdapter(Context context, List<WrappedModel> wrappedModelList) {
         this.context = context;
@@ -37,6 +41,20 @@ public class WrappedModelAdapter extends RecyclerView.Adapter<WrappedModelAdapte
         holder.textTracks.setText(wrappedModel.getTracks());
         holder.textArtists.setText(wrappedModel.getArtists());
         holder.textGenres.setText(wrappedModel.getGenres());
+
+        holder.imagePost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, SpotifyWrappedPopUp.class);
+                intent.putExtra("userID", wrappedModel.getUserId());
+                intent.putExtra("description", wrappedModel.getDescription());
+                intent.putExtra("tracks", wrappedModel.getTracks());
+                intent.putExtra("artists", wrappedModel.getArtists());
+                intent.putExtra("genres", wrappedModel.getGenres());
+                context.startActivity(intent);
+                Toast.makeText(context.getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+            }
+        });
         Log.d("e", wrappedModel.getDescription());
     }
 
@@ -52,6 +70,7 @@ public class WrappedModelAdapter extends RecyclerView.Adapter<WrappedModelAdapte
         public TextView textArtists;
         public TextView textTracks;
         public TextView textGenres;
+
 
         public ViewHolder(View itemView) {
             super(itemView);

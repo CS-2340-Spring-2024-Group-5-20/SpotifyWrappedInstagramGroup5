@@ -22,7 +22,7 @@
             android:layout_marginStart="5dp"
             android:background="@color/white"
             android:elevation="3dp"
-            android:src="@color/black"/>
+            android:src="@drawable/fade1"/>
 
         <!-- New LinearLayout for Text Views -->
         <LinearLayout
