@@ -20,34 +20,35 @@
         android:id="@+id/spotifyWrappedUserID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="User ID: YourUserID"
         android:textColor="#FFFFFF"
-        android:textSize="18sp"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/wrapPageBackButton"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp" />
+        app:layout_constraintTop_toBottomOf="@id/wrapPageBackButton" />
+
     <TextView
         android:id="@+id/spotifyWrappedFavoriteTracks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Favorite Tracks:"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="100dp"
+        android:text="Favorite Tracks:\n"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/spotifyWrappedUserID"/>
+        app:layout_constraintTop_toTopOf="@id/spotifyWrappedUserID" />
 
     <TextView
         android:id="@+id/spotifyWrappedFavoriteArtists"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Favorite Artists:"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="100dp"
+        android:text="Favorite Artists:\n"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/spotifyWrappedFavoriteTracks" />
 
@@ -55,11 +56,11 @@
         android:id="@+id/spotifyWrappedFavoriteGenres"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Favorite Genre:"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="100dp"
+        android:text="Favorite Genre\n"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/spotifyWrappedFavoriteArtists" />
 

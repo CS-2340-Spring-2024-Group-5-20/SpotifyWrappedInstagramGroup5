@@ -33,7 +33,7 @@ public class HomePage extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         mStore = FirebaseFirestore.getInstance();
 
-        List<WrappedModel> data = WrappedModel.loadData(mStore, new DataCallback() {
+        List<WrappedModel> data = WrappedModel.loadData(mStore, auth, new DataCallback() {
             @Override
             public void onCallback(List<WrappedModel> wrappedModelList) {
                 WrappedModelAdapter adapter = new WrappedModelAdapter(HomePage.this, wrappedModelList);
