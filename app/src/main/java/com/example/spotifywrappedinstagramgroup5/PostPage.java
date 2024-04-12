@@ -2,9 +2,15 @@ package com.example.spotifywrappedinstagramgroup5;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,15 +22,26 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.json.JSONException;
+
+import java.sql.Time;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PostPage extends AppCompatActivity {
     FragmentPostpageBinding binding; // Corrected binding class
     FirebaseAuth auth;
     FirebaseUser user;
+
+    FirebaseFirestore mStore;
+
+    SpotifyApiManager manager;
+
+    TimeFrame selectedTimeFrame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +51,20 @@ public class PostPage extends AppCompatActivity {
 
         // Initialize Firebase authentication
         auth = FirebaseAuth.getInstance();
+        mStore = FirebaseFirestore.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        String userId = user.getUid();
+        DocumentReference docRef = mStore.collection("UserData").document(userId);
+
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                String token = (String)documentSnapshot.get("Spotify Token");
+                String code = (String)documentSnapshot.get("Spotify Code");
+                manager = new SpotifyApiManager(PostPage.this, code, token, mStore, auth);
+            } else {
+                Log.d("Document", "No such document");
+            }
+        }).addOnFailureListener(e -> Log.d("Document", "Failed with: ", e));
 
         // Set up bottom navigation menu
         BottomNavigationView bottomMenu = binding.bottomMenu; // Corrected reference to bottom menu
@@ -65,34 +96,60 @@ public class PostPage extends AppCompatActivity {
 
         EditText editTextContent = binding.editTextContent;
 
+        Spinner spinner = findViewById(R.id.timeframe_picker);
+
+        // Convert enum values to a string array
+        TimeFrame[] timeFrames = TimeFrame.values();
+        String[] items = new String[timeFrames.length];
+        for (int i = 0; i < timeFrames.length; i++) {
+            items[i] = timeFrames[i].toString();
+        }
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, items);
+
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
+        // Optional: Handle spinner item selections
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // Handle item selection
+                selectedTimeFrame = TimeFrame.values()[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                selectedTimeFrame = TimeFrame.long_term;
+            }
+        });
+
+
         binding.buttonPost.setOnClickListener(view -> {
             // Get the content from EditText
             String content = editTextContent.getText().toString().trim();
 
             if (!content.isEmpty()) {
-                // Create a map to store the post
-                Map<String, Object> post = new HashMap<>();
-                post.put("PostOne", content); // You can add more fields here
+                if (manager != null) {
+                    try {
+                        manager.generateWrapped(PostPage.this, 5, selectedTimeFrame, content);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                Toast.makeText(PostPage.this, "Successfully Posted", Toast.LENGTH_SHORT).show();
 
-                // Add a new document with a generated ID
-                db.collection("PostTests").document("JSR")
-                        .set(post)
-                        .addOnSuccessListener(documentReference -> Toast.makeText(PostPage.this, "Successfully Posted", Toast.LENGTH_SHORT).show())
-                        .addOnFailureListener(e -> Toast.makeText(PostPage.this, "Error adding post", Toast.LENGTH_SHORT).show());
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
             } else {
                 // Handle case where EditText is empty
                 Toast.makeText(PostPage.this, "Post content cannot be empty.", Toast.LENGTH_SHORT).show();
             }
         });
-//        db.collection("PostTest").document("JSR").set(test).addOnCompleteListener(new OnCompleteListener<Void>() {
-//
-//            @Override
-//            public void onComplete(@NonNull Task<Void> task) {
-//                if (task.isSuccessful()) {
-//                    Toast.makeText(PostPage.this, "Test string added.", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-
     }
 }

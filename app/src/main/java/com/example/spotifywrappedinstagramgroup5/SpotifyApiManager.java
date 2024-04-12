@@ -34,7 +34,10 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Class managing integration with the Spotify API
@@ -44,7 +47,7 @@ public class SpotifyApiManager {
     public static final String REDIRECT_URI = "spotifywrappedinstagramgroup5://auth";
     public static final String SPOTIFY_API_BASE_URL = "https://api.spotify.com/v1/";
 
-    private final OkHttpClient mOkHttpClient = new OkHttpClient();
+    private final OkHttpClient mOkHttpClient;
     private String mAccessToken, mAccessCode;
     private Call mCall;
 
@@ -63,6 +66,11 @@ public class SpotifyApiManager {
         if (mAuth == null || mStore == null) {
             throw new RuntimeException("Firebase was not loaded correctly into API manager");
         }
+
+        this.mOkHttpClient = new OkHttpClient.Builder()
+                .readTimeout(30, TimeUnit.SECONDS)
+                .connectTimeout(30,TimeUnit.SECONDS)
+                .build();
 
         this.mAccessCode = mAccessCode;
         this.mAccessToken = mAccessToken;
@@ -137,7 +145,7 @@ public class SpotifyApiManager {
         CompletableFuture<JSONArray> future = new CompletableFuture<>();
 
         if (mAccessToken == null) {
-            Toast.makeText(context, "You need to get an access token first!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "You need to get an access token first!", Toast.LENGTH_SHORT).show();
             future.completeExceptionally(new IOException("Access token was null"));
         } else {
 
@@ -160,8 +168,8 @@ public class SpotifyApiManager {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     Log.d("HTTP", "Failed to fetch data: " + e);
-                    Toast.makeText(context, "Failed to fetch data, watch Logcat for more details",
-                            Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, "Failed to fetch data, watch Logcat for more details",
+                    //        Toast.LENGTH_SHORT).show();
                     future.completeExceptionally(e);
                 }
 
@@ -174,8 +182,8 @@ public class SpotifyApiManager {
                             future.complete(artists); // Complete with the result
                         } catch (JSONException e) {
                             Logger.log("Failed to parse data: " + e);
-                            Toast.makeText(context, "Failed to parse data, watch Logcat for more details",
-                                    Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(context, "Failed to parse data, watch Logcat for more details",
+                             //       Toast.LENGTH_SHORT).show();
                             future.completeExceptionally(e);
                         }
                     } else {
@@ -275,5 +283,67 @@ public class SpotifyApiManager {
                         Log.d(TAG, "Document successfully written.");
                     }
                 });
+    }
+
+    private Set<String>[] generateWrappedArtists(Activity context, int limit, TimeFrame timeFrame, String newWrappedID) throws JSONException {
+        CompletableFuture<JSONArray> topArtistsFuture = makeApiCall(context, "me/top/artists", "limit=" + limit + "&time_range=" + timeFrame.name());
+
+        // Process top artists and deduce genres
+        JSONArray topArtists = topArtistsFuture.join(); // Similar to above, get() does not block here
+        Logger.log("REACHED 3");
+        Set<String> artistNames = new LinkedHashSet<>();
+        Set<String> genres = new LinkedHashSet<>(); // Use a set to avoid duplicates
+        for (int i = 0; i < topArtists.length(); i++) {
+            JSONObject artist = topArtists.getJSONObject(i);
+            artistNames.add(artist.getString("name"));
+            JSONArray artistGenres = artist.getJSONArray("genres");
+            for (int j = 0; j < artistGenres.length(); j++) {
+                genres.add(artistGenres.getString(j));
+            }
+        }
+
+        Set<String>[] toReturn = new Set[2];
+        toReturn[0] = artistNames;
+        toReturn[1] = genres;
+
+        return toReturn;
+    }
+
+    private List<String> generateWrappedTracks(Activity context, int limit, TimeFrame timeFrame, String newWrappedID) throws JSONException {
+        CompletableFuture<JSONArray> topTracksFuture = makeApiCall(context, "me/top/tracks", "limit=" + limit + "&time_range=" + timeFrame.name());
+
+        // Process top tracks
+        JSONArray topTracks = topTracksFuture.join(); // Note: get() does not block here because it's guaranteed to be complete
+        List<String> trackNames = new ArrayList<>();
+        for (int i = 0; i < topTracks.length(); i++) {
+            JSONObject track = topTracks.getJSONObject(i);
+            trackNames.add(track.getString("name"));
+        }
+
+       return trackNames;
+    }
+
+    public void generateWrapped(Activity context, int limit, TimeFrame timeFrame, String description) throws JSONException {
+        HashMap<String, Object> wrappedData = new HashMap<>();
+        wrappedData.put("Description", description);
+
+        String newWrappedID = UUID.randomUUID().toString();
+
+        Set<String>[] data = generateWrappedArtists(context, limit, timeFrame, newWrappedID);
+        List<String> artists = new ArrayList<>(data[0]);
+        List<String> genres = new ArrayList<>(data[1]);
+        List<String> tracks = generateWrappedTracks(context, limit, timeFrame, newWrappedID);
+
+        wrappedData.put("TopTracks", tracks);
+        wrappedData.put("TopGenres", genres);
+        wrappedData.put("TopArtists", artists);
+        wrappedData.put("UserId", userId);
+
+        mStore.collection("Wraps").document(newWrappedID)
+                .set(wrappedData)
+                .addOnSuccessListener(aVoid -> Log.d(TAG, "Spotify Wrapped successfully saved."))
+                .addOnFailureListener(e -> Log.e(TAG, "Error saving Spotify Wrapped: ", e));
+
+
     }
 }

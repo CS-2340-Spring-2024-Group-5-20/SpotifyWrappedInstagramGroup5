@@ -6,17 +6,22 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.spotifywrappedinstagramgroup5.databinding.FragmentHomepageBinding;
 import com.example.spotifywrappedinstagramgroup5.databinding.FragmentPostpageBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.List;
 
 public class HomePage extends AppCompatActivity {
     FragmentHomepageBinding binding; // Corrected binding class
     FirebaseAuth auth;
     FirebaseUser user;
+    FirebaseFirestore mStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +31,21 @@ public class HomePage extends AppCompatActivity {
 
         // Initialize Firebase authentication
         auth = FirebaseAuth.getInstance();
+        mStore = FirebaseFirestore.getInstance();
+
+        List<WrappedModel> data = WrappedModel.loadData(mStore, new DataCallback() {
+            @Override
+            public void onCallback(List<WrappedModel> wrappedModelList) {
+                WrappedModelAdapter adapter = new WrappedModelAdapter(HomePage.this, wrappedModelList);
+                binding.recyclerView.setAdapter(adapter);
+                binding.recyclerView.setLayoutManager(new LinearLayoutManager(HomePage.this));
+            }
+
+            @Override
+            public void onError(Exception e) {
+                // Handle error
+            }
+        });
 
         // Set up bottom navigation menu
         BottomNavigationView bottomMenu = binding.bottomMenu; // Corrected reference to bottom menu
