@@ -1,9 +1,11 @@
 package com.example.spotifywrappedinstagramgroup5;
 
+import com.example.Models.User;
+
 import java.util.List;
 
-public interface DataCallback {
-    void onCallback(List<WrappedModel> wrappedModelList);
+public interface DataCallBackSearch {
+    void onCallback(List<User> users);
     void onError(Exception e);
 
 }
