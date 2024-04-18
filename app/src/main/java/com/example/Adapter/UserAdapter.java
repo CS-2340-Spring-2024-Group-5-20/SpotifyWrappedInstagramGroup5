@@ -5,14 +5,17 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.Models.User;
+import com.example.spotifywrappedinstagramgroup5.CommentPage;
 import com.example.spotifywrappedinstagramgroup5.ProfilePageSearchPopOut;
 import com.example.spotifywrappedinstagramgroup5.R;
 import com.example.spotifywrappedinstagramgroup5.SpotifyWrappedPopUp;
@@ -65,15 +68,17 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         return list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView username;
-        public RelativeLayout searchCard; // This is the layout for the entire item
+        public CardView searchCard;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             username = itemView.findViewById(R.id.search_item_username);
-            searchCard = itemView.findViewById(R.id.profilePagePopUpLayout); // Assume this ID for your RelativeLayout
+            searchCard = itemView.findViewById(R.id.profilePagePopUpLayout);
+
+            // Assume this ID for your RelativeLayout
         }
     }
 }
