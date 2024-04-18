@@ -20,12 +20,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/profile_image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@color/black" />
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -33,14 +27,15 @@
                 android:layout_marginStart="16dp">
 
                 <TextView
-                    android:id="@+id/search_item_username"
+                    android:id="@+id/comment_item_username"
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="UserID: user_1234"
+                    android:text="UsernamePerson: "
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <TextView
-                    android:id="@+id/user_name"
+                    android:id="@+id/comment_item_comment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Name: John Doe"
@@ -50,14 +45,6 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/comment_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="4dp"
-            android:layout_marginStart="100dp"
-            android:src="@drawable/comment" />
 
         <!-- Comment Icon Positioned at the Bottom Right of the Card -->
 
