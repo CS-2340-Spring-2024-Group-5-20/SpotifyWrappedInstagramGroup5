@@ -55,13 +55,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                 Toast.makeText(context, "Profile opened for " + user.getUsername(), Toast.LENGTH_SHORT).show();
             }
         });
-        holder.commentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), CommentPage.class);
-                v.getContext().startActivity(intent);
-            }
-        });
     }
 
     @Override
@@ -69,17 +62,16 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         return list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView username;
         public CardView searchCard;
-        public ImageView commentButton;// This is the layout for the entire item
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             username = itemView.findViewById(R.id.search_item_username);
             searchCard = itemView.findViewById(R.id.profilePagePopUpLayout);
-            commentButton = itemView.findViewById(R.id.comment_icon);
+
             // Assume this ID for your RelativeLayout
         }
     }

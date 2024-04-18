@@ -50,14 +50,6 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/comment_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="4dp"
-            android:layout_marginStart="100dp"
-            android:src="@drawable/comment" />
 
         <!-- Comment Icon Positioned at the Bottom Right of the Card -->
 
