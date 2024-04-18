@@ -88,10 +88,14 @@ public class CommentPage extends AppCompatActivity {
                                 if (commentsData instanceof Map && commentorData instanceof ArrayList) {
 
                                     // ensuring both arraylists are indeed arraylists and operations can proceed.
-                                    Map<String, String> comments = (Map<String, String>) data.get("Comments");
+                                    Map<String, ArrayList<String>> comments = (Map<String, ArrayList<String>>) data.get("Comments");
                                     // put comments map into local object
-                                    comments.put(commenterID, comment);
-                                    // add comment to comments map under key of userID, value is actual comment
+                                    if (!comments.containsKey(commenterID)) {
+                                        comments.put(commenterID, new ArrayList<>());
+                                        // if external storage for commenter does not exist, it will make one.
+                                    }
+                                    comments.get(commenterID).add(comment);
+                                    // add comment to comments array for user under this post.
                                     document.getReference().update("Comments", comments);
                                     // updates comments map in firestore to reflect changes in local object
 
