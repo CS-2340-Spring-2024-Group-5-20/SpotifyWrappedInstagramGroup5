@@ -15,6 +15,7 @@ public class WrappedModel {
     private List<String> topGenres;
     private List<String> topTracks;
     private String userId;
+    private int likes;
 
     public WrappedModel(String description, List<String> topArtists, List<String> topGenres, List<String> topTracks, String userId) {
         this.description = description;
@@ -22,6 +23,7 @@ public class WrappedModel {
         this.topTracks = topTracks;
         this.userId = userId;
         this.topArtists = topArtists;
+        this.likes = 0;
     }
 
     public static List<WrappedModel> loadData(FirebaseFirestore mStore, FirebaseAuth mAuth, DataCallback callback) {
@@ -66,5 +68,16 @@ public class WrappedModel {
 
     public String getGenres(){
         return topGenres != null ? TextUtils.join(", ", this.topGenres) : "";
+    }
+    public String getLikes() {
+        return (String.valueOf(likes));
+    }
+    public void likeWrap() {
+        likes++;
+        //needs some implementation as to how to ensure one person does not like more than once
+    }
+    public void unlikeWrap() {
+        likes--;
+        //needs some implementation as to how to ensure one person does not like more than once
     }
 }

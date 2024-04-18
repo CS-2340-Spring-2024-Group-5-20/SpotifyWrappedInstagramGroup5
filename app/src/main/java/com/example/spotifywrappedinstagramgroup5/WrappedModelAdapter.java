@@ -13,6 +13,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.spotifywrappedinstagramgroup5.R;
+
+import org.w3c.dom.Comment;
+
 import java.util.List;
 
 public class WrappedModelAdapter extends RecyclerView.Adapter<WrappedModelAdapter.ViewHolder> {
