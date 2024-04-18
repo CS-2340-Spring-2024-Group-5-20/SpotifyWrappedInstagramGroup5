@@ -2,6 +2,7 @@ package com.example.spotifywrappedinstagramgroup5;
 
 import android.text.TextUtils;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -23,7 +24,7 @@ public class WrappedModel {
         this.topArtists = topArtists;
     }
 
-    public static List<WrappedModel> loadData(FirebaseFirestore mStore, DataCallback callback) {
+    public static List<WrappedModel> loadData(FirebaseFirestore mStore, FirebaseAuth mAuth, DataCallback callback) {
         List<WrappedModel> wrappedModels = new ArrayList<>();
 
         mStore.collection("Wraps")
@@ -34,7 +35,7 @@ public class WrappedModel {
                         List<String> topArtists = (List<String>) documentSnapshot.get("TopArtists");
                         List<String> topGenres = (List<String>) documentSnapshot.get("TopGenres");
                         List<String> topTracks = (List<String>) documentSnapshot.get("TopTracks");
-                        String userId = documentSnapshot.getString("UserId");
+                        String userId = mAuth.getCurrentUser().getEmail().replace("@gmail.com", "");
 
                         WrappedModel wrappedModel = new WrappedModel(description, topArtists, topGenres, topTracks, userId);
                         wrappedModels.add(wrappedModel);
@@ -55,14 +56,14 @@ public class WrappedModel {
     }
 
     public String getTracks(){
-        return topTracks != null ? TextUtils.join(",", this.topTracks) : "null";
+        return topTracks != null ? TextUtils.join(", ", this.topTracks) : "null";
     }
 
     public String getArtists(){
-        return topArtists != null ? TextUtils.join(",", this.topArtists) : "";
+        return topArtists != null ? TextUtils.join(", ", this.topArtists) : "";
     }
 
     public String getGenres(){
-        return topGenres != null ? TextUtils.join(",", this.topGenres) : "";
+        return topGenres != null ? TextUtils.join(", ", this.topGenres) : "";
     }
 }
