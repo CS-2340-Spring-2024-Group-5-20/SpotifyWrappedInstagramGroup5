@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import android.app.Activity;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +18,7 @@ import okhttp3.Response;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.spotify.sdk.android.auth.AuthorizationClient;
 import com.spotify.sdk.android.auth.AuthorizationRequest;
@@ -338,12 +340,61 @@ public class SpotifyApiManager {
         wrappedData.put("TopGenres", genres);
         wrappedData.put("TopArtists", artists);
         wrappedData.put("UserId", userId);
+        wrappedData.put("LikeCount", 0);
+        wrappedData.put("LikedUserIds", new ArrayList<String>());
+        wrappedData.put("Comments", new HashMap<String, String>());
+        wrappedData.put("CommentedIds", new ArrayList<String>());
 
         mStore.collection("Wraps").document(newWrappedID)
                 .set(wrappedData)
                 .addOnSuccessListener(aVoid -> Log.d(TAG, "Spotify Wrapped successfully saved."))
                 .addOnFailureListener(e -> Log.e(TAG, "Error saving Spotify Wrapped: ", e));
+    }
 
+    public void likeWrapped(String userId, String postId) {
+        DocumentReference wrapDoc = mStore.collection("Wraps").document("postId");
+        wrapDoc.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                List<String> likedUserIds = (List<String>) documentSnapshot.get("LikedUserIds");
+                int likeCount = (int) documentSnapshot.get("LikeCount");
 
+                if (likedUserIds.contains(userId)) {
+                    likedUserIds.remove(userId);
+                    likeCount--;
+                } else {
+                    likedUserIds.add(userId);
+                    likeCount++;
+                }
+
+                HashMap<String, Object> updatedData = new HashMap<String, Object>();
+                updatedData.put("LikeCount", likeCount);
+                updatedData.put("LikedUserIds", likedUserIds);
+
+                wrapDoc.update(updatedData);
+            } else {
+                Log.d("Document", "No such document");
+            }
+        }).addOnFailureListener(e -> Log.d("Document", "Failed with: ", e));
+    }
+    public void addComment(String userId, String comment, String postId) {
+        DocumentReference wrapDoc = mStore.collection("Wraps").document("postId");
+        wrapDoc.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                ArrayList<String> commentedIds = (ArrayList<String>)documentSnapshot.get("CommentedIds");
+                HashMap<String, String> comments = (HashMap<String, String>)documentSnapshot.get("Comments");
+                if (!commentedIds.contains(userId)) {
+                    commentedIds.add(userId);
+                    comments.put(userId, comment);
+                }
+
+                HashMap<String, Object> updatedData = new HashMap<String, Object>();
+                updatedData.put("CommentedIds", commentedIds);
+                updatedData.put("Comments", comments);
+
+                wrapDoc.update(updatedData);
+            } else {
+                Log.d("Document", "No such document");
+            }
+        }).addOnFailureListener(e -> Log.d("Document", "Failed with: ", e));
     }
 }
