@@ -22,10 +22,15 @@ import java.util.ArrayList;
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     private Context context;
     private ArrayList<User> list;
+    private static User returnableUser;
 
     public UserAdapter(Context context, ArrayList<User> list) {
         this.context = context;
         this.list = list;
+    }
+
+    public static User getUser() {
+        return returnableUser;
     }
 
     @NonNull
@@ -48,6 +53,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                 intent.putExtra("username", user.getUsername());
                 intent.putExtra("faveArtists", user.getFaveArtists());
                 intent.putExtra("mostPlayed", user.getMostPlayed());
+                returnableUser = user;
                 context.startActivity(intent);
                 Toast.makeText(context, "Profile opened for " + user.getUsername(), Toast.LENGTH_SHORT).show();
             }
