@@ -1,53 +1,53 @@
 package com.example.spotifywrappedinstagramgroup5;
 
-import static android.content.ContentValues.TAG;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.example.Adapter.UserAdapter;
+import com.example.Models.User;
 import com.example.spotifywrappedinstagramgroup5.databinding.FragmentSearchpageBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchPage extends AppCompatActivity {
-    FragmentSearchpageBinding binding; // Corrected binding class
+    FragmentSearchpageBinding binding;
     FirebaseAuth auth;
-    FirebaseUser user;
     EditText userSearch;
+    RecyclerView recyclerView;
+    UserAdapter userAdapter;
+    ArrayList<User> list;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();  // Firestore instance
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = FragmentSearchpageBinding.inflate(getLayoutInflater()); // Corrected binding initialization
+        binding = FragmentSearchpageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        userSearch = findViewById(R.id.search_button);
 
+        // UI Components
+        userSearch = binding.searchButton; // Assuming you have searchField as ID for your EditText
+        recyclerView = findViewById(R.id.search_recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Initialize Firebase authentication
-        auth = FirebaseAuth.getInstance();
+        list = new ArrayList<>();
+        userAdapter = new UserAdapter(this, list);
+        recyclerView.setAdapter(userAdapter);
 
-        // Set up bottom navigation menu
         BottomNavigationView bottomMenu = binding.bottomMenu; // Corrected reference to bottom menu
         bottomMenu.setBackground(null); // Set background to null if needed
         binding.bottomMenu.setBackground(null);
@@ -71,74 +71,45 @@ public class SearchPage extends AppCompatActivity {
             return true;
         });
 
-        userSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+        // Event listener for the search input
+        userSearch.addTextChangedListener(new TextWatcher() {
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH ||
-                        (event != null && event.getAction() == KeyEvent.ACTION_DOWN &&
-                                event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-                    // Perform search operation
-                    String userNameSearch = String.valueOf(userSearch.getText());
-                    searchForUser(userNameSearch, new Callback() {
-                        @Override
-                        public void onSuccess(String username) {
-                            Toast.makeText(SearchPage.this, String.format("User %s.", username), Toast.LENGTH_SHORT).show();
-                        }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Nothing needed here
+            }
 
-                        @Override
-                        public void onNotFound() {
-                            Toast.makeText(SearchPage.this, "User not found.", Toast.LENGTH_SHORT).show();
-                        }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Call the search function with the updated text
+                performSearch(s.toString().trim());
+            }
 
-                        @Override
-                        public void onError(Exception e) {
-                            // Handle error if needed
-                        }
-                    });
-                    return true; // Consume the event
-                }
-                return false; // Allow other listeners to handle the event
+            @Override
+            public void afterTextChanged(Editable s) {
+                // Nothing needed here
             }
         });
     }
-        FirebaseFirestore mStore = FirebaseFirestore.getInstance();
 
+    // Inside your SearchPage class
+    private void performSearch(String queryText) {
+        if (!queryText.isEmpty()) {
+            User.loadUsersBySearch(queryText, db, new DataCallBackSearch() {
+                @Override
+                public void onCallback(List<User> users) {
+                    list.clear();
+                    list.addAll(users);
+                    userAdapter.notifyDataSetChanged();
+                }
 
-    private void searchForUser(String username, final Callback callback) {
-        mStore.collection("UserData")
-                .whereEqualTo("Username", username)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            QuerySnapshot querySnapshot = task.getResult();
-                            if (querySnapshot != null && !querySnapshot.isEmpty()) {
-                                // If there's at least one document found
-                                DocumentSnapshot doc = querySnapshot.getDocuments().get(0); // Assuming there's only one matching document
-                                String uuid = doc.getString("UUID");
-                                callback.onSuccess(uuid);
-                            } else {
-                                callback.onNotFound();
-                            }
-                        } else {
-                            callback.onError(task.getException());
-                        }
-                    }
-                });
+                @Override
+                public void onError(Exception e) {
+                }
+            });
+        } else {
+            list.clear();
+            userAdapter.notifyDataSetChanged();
+        }
     }
-
-
-    // Define a callback interface
-    interface Callback {
-        void onSuccess(String uuid);
-        void onNotFound();
-        void onError(Exception e);
-    }
-
-
-    private void addFollower(String uuid) {
-
-    }
-
 }

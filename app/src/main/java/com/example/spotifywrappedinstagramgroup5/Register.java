@@ -50,8 +50,9 @@ public class Register extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
+
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
+        if(currentUser != null) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();
@@ -114,10 +115,13 @@ public class Register extends AppCompatActivity {
                                     //the wraps arraylist will be where the user puts their wraps
                                     data.put("Followers", new ArrayList<>()); // initializes initial array of followers to be empty.
                                     //the followers arraylist will contain UUID's and Usernames of all followers (tentative)
-                                    data.put("FavesGenresAndArtists", new ArrayList<>()); //Arraylist of the users favorite genres and artists
+                                    data.put("FaveArtists", new ArrayList<>()); //Arraylist of the users favorite genres and artists
                                     //has to be both in one arraylist because app crashes if i add another arraylist
                                     data.put("FaveSongs", new ArrayList<>()); // arraylist containing user's top 3 songs
 
+                                    //storing spotify data
+                                    data.put("Spotify Token", "");
+                                    data.put("Spotify Code", "");
 
 //                                  data.put("FaveGenres", new ArrayList<>()); // does not work with this array added
 

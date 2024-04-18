@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:id="@+id/profilePagePopUpLayout">
+
+    <!-- Profile Image -->
+    <ImageView
+        android:id="@+id/profile_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@color/black"
+        android:layout_centerVertical="true"/>
+
+    <!-- User ID -->
+    <TextView
+        android:id="@+id/search_item_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/profile_image"
+        android:layout_marginStart="16dp"
+        android:layout_alignParentTop="true"
+        android:text="UserID: user_1234"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    <!-- User Name -->
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_item_username"
+        android:layout_toEndOf="@id/profile_image"
+        android:layout_marginStart="16dp"
+        android:text="Name: John Doe"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    <!-- User Email -->
+    <TextView
+        android:id="@+id/user_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_name"
+        android:layout_toEndOf="@id/profile_image"
+        android:layout_marginStart="16dp"
+        android:text="Email: john.doe@example.com"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+</RelativeLayout>
