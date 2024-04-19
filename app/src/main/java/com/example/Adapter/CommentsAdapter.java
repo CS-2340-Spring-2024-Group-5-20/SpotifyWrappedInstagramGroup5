@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.Models.CommentModel;
 import com.example.Models.User;
 import com.example.spotifywrappedinstagramgroup5.CommentPage;
 import com.example.spotifywrappedinstagramgroup5.ProfilePageSearchPopOut;
@@ -24,10 +25,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.CommentViewHolder> {
-    private List<String> commentsList;
+    private Context context;
+    private ArrayList<CommentModel> list;
 
-    public CommentsAdapter(List<String> commentsList) {
-        this.commentsList = commentsList;
+
+    public CommentsAdapter(Context context, ArrayList<CommentModel> list) {
+        this.context = context;
+        this.list = list;
     }
 
     @Override
@@ -38,25 +42,26 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
     @Override
     public void onBindViewHolder(CommentViewHolder holder, int position) {
-        String comment = commentsList.get(position);
-        holder.bind(comment);
+        CommentModel commentModel = list.get(position);
+        holder.username.setText(commentModel.getPoster());
+        holder.comment.setText(commentModel.getComments());
     }
 
     @Override
     public int getItemCount() {
-        return commentsList.size();
+        return list.size();
     }
 
-    public class CommentViewHolder extends RecyclerView.ViewHolder {
-        private TextView commentTextView;
+
+    public static class CommentViewHolder extends RecyclerView.ViewHolder {
+        public TextView username;
+        public TextView comment;
 
         public CommentViewHolder(View itemView) {
             super(itemView);
-            commentTextView = itemView.findViewById(R.id.comment_item_comment);
-        }
 
-        public void bind(String comment) {
-            commentTextView.setText(comment);
+            username = itemView.findViewById(R.id.comment_item_username);
+            comment = itemView.findViewById(R.id.comment_item_comment);
         }
     }
 }

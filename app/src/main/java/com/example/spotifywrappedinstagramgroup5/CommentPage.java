@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.Adapter.CommentsAdapter;
+import com.example.Models.CommentModel;
 import com.example.Models.User;
 import com.example.spotifywrappedinstagramgroup5.databinding.CommentPageBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,8 +40,23 @@ public class CommentPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = CommentPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        String postId = getIntent().getStringExtra("postID");
+        if (postId == null) {
+            Toast.makeText(this, "Error: Post ID not available.", Toast.LENGTH_SHORT).show();
+        }
+        CommentModel.loadData(db, postId, new CommentPageCallBack() {
+            @Override
+            public void onCallback(List<CommentModel> wrappedModelList) {
+                CommentsAdapter commentsAdapter = new CommentsAdapter(CommentPage.this, (ArrayList<CommentModel>) wrappedModelList);
+                binding.commentsRecyclerView.setAdapter(commentsAdapter);
+                binding.commentsRecyclerView.setLayoutManager(new LinearLayoutManager(CommentPage.this));
+            }
 
-
+            @Override
+            public void onError(Exception e) {
+                Toast.makeText(CommentPage.this, "Failed to load comments: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
         ImageView backButton = findViewById(R.id.commentPageBackButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,10 +69,18 @@ public class CommentPage extends AppCompatActivity {
         postCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userId = auth.getCurrentUser().getEmail().replace("@gmail.com", "");
-                String comment = commentBox.getText().toString();
-                addComment(comment,"cbf8da5d-0882-4b60-aeb9-9aa77c804ab6", userId);
-                // need to get postID to persist across state changes.
+                String comment = commentBox.getText().toString().trim();
+                if (!comment.isEmpty()) {
+                    String postId = getIntent().getStringExtra("postID");  // Correctly retrieve the post ID
+                    if (postId == null) {
+                        Toast.makeText(CommentPage.this, "No Post ID found", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    String commenterId = FirebaseAuth.getInstance().getCurrentUser().getUid();  // Get the commenter ID from FirebaseAuth
+                    addComment(comment, postId, commenterId);  // Call addComment method to post the comment
+                } else {
+                    Toast.makeText(CommentPage.this, "Comment cannot be empty", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -129,37 +153,6 @@ public class CommentPage extends AppCompatActivity {
                     });
 
         }
-    }
-    private void displayComments(List<String> commentsList) {
-        RecyclerView commentsRecyclerView = findViewById(R.id.commentsRecyclerView);
-        CommentsAdapter commentsAdapter = new CommentsAdapter(commentsList);
-        commentsRecyclerView.setAdapter(commentsAdapter);
-        commentsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-    private void fetchComments(String postID) {
-        CollectionReference wrapsRef = db.collection("Wraps");
-        wrapsRef.whereEqualTo("PostId", postID)
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    List<String> commentsList = new ArrayList<>();
-                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                        Map<String, Object> data = document.getData();
-                        Map<String, ArrayList<String>> commentsMap = (Map<String, ArrayList<String>>) data.get("Comments");
-                        if (commentsMap != null) {
-                            // Iterate through the comments map and add each comment to the list
-                            for (Map.Entry<String, ArrayList<String>> entry : commentsMap.entrySet()) {
-                                ArrayList<String> comments = entry.getValue();
-                                commentsList.addAll(comments);
-                            }
-                        }
-                    }
-                    // Pass the comments list to the adapter to display the comments
-                    displayComments(commentsList);
-                })
-                .addOnFailureListener(e -> {
-                    Log.e("FirestoreQuery", "Error querying Firestore", e);
-                });
     }
 
 }
