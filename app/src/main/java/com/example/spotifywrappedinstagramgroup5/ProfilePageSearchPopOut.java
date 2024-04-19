@@ -1,7 +1,6 @@
 package com.example.spotifywrappedinstagramgroup5;
 
 import android.content.Context;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,25 +8,19 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
+
 
 import com.example.Adapter.UserAdapter;
-import com.example.Models.User;
 import com.example.spotifywrappedinstagramgroup5.databinding.ProfilePageSearchPopoutBinding;
-import com.example.spotifywrappedinstagramgroup5.databinding.SpotifyWrapPageBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FieldValue;
+
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class ProfilePageSearchPopOut extends AppCompatActivity {
     ProfilePageSearchPopoutBinding binding;
