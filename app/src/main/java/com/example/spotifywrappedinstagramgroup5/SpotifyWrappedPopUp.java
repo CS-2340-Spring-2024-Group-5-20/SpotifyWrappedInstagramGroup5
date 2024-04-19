@@ -5,6 +5,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.spotifywrappedinstagramgroup5.databinding.SpotifyWrapPageBinding;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,6 +43,8 @@ public class SpotifyWrappedPopUp extends AppCompatActivity {
         animationDrawable.setEnterFadeDuration(2500);
         animationDrawable.setExitFadeDuration(5000);
         animationDrawable.start();
+
+
 
         // Set up the back button
         ImageView backButton = findViewById(R.id.wrapPageBackButton);
@@ -80,6 +84,7 @@ public class SpotifyWrappedPopUp extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         CollectionReference wrapsRef = mStore.collection("Wraps");
         // create reference to Wraps collection
+        TextView likeCountTextView = findViewById(R.id.likesCountTextView);
         wrapsRef.whereEqualTo("PostId", postId)
                 // queries for Wrap in collection with corresponding postId
                 .get()
@@ -116,6 +121,8 @@ public class SpotifyWrappedPopUp extends AppCompatActivity {
                             Toast.makeText(context.getApplicationContext(), "Liked wrap", Toast.LENGTH_SHORT).show();
 
                         }
+                        likeCountTextView.setText(String.valueOf(likes));
+
                     }
                         });
     }
