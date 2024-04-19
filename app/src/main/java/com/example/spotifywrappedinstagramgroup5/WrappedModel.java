@@ -74,14 +74,7 @@ public class WrappedModel {
     public String getLikes() {
         return (String.valueOf(likes));
     }
-    public void likeWrap() {
-        likes++;
-        //needs some implementation as to how to ensure one person does not like more than once
-    }
-    public void unlikeWrap() {
-        likes--;
-        //needs some implementation as to how to ensure one person does not like more than once
-    }
+
     public String getIdentifier() {
         return this.identifier;
     }
