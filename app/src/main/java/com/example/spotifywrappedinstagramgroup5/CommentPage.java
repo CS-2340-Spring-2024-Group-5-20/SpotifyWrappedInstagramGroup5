@@ -10,7 +10,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.Adapter.CommentsAdapter;
 import com.example.Models.User;
 import com.example.spotifywrappedinstagramgroup5.databinding.CommentPageBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +24,7 @@ import com.google.firebase.firestore.Source;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 public class CommentPage extends AppCompatActivity {
@@ -35,6 +39,7 @@ public class CommentPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = CommentPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
 
         ImageView backButton = findViewById(R.id.commentPageBackButton);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -125,4 +130,36 @@ public class CommentPage extends AppCompatActivity {
 
         }
     }
+    private void displayComments(List<String> commentsList) {
+        RecyclerView commentsRecyclerView = findViewById(R.id.commentsRecyclerView);
+        CommentsAdapter commentsAdapter = new CommentsAdapter(commentsList);
+        commentsRecyclerView.setAdapter(commentsAdapter);
+        commentsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void fetchComments(String postID) {
+        CollectionReference wrapsRef = db.collection("Wraps");
+        wrapsRef.whereEqualTo("PostId", postID)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    List<String> commentsList = new ArrayList<>();
+                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                        Map<String, Object> data = document.getData();
+                        Map<String, ArrayList<String>> commentsMap = (Map<String, ArrayList<String>>) data.get("Comments");
+                        if (commentsMap != null) {
+                            // Iterate through the comments map and add each comment to the list
+                            for (Map.Entry<String, ArrayList<String>> entry : commentsMap.entrySet()) {
+                                ArrayList<String> comments = entry.getValue();
+                                commentsList.addAll(comments);
+                            }
+                        }
+                    }
+                    // Pass the comments list to the adapter to display the comments
+                    displayComments(commentsList);
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FirestoreQuery", "Error querying Firestore", e);
+                });
+    }
+
 }
