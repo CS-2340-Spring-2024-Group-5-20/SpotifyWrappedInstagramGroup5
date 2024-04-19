@@ -77,8 +77,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
             username = itemView.findViewById(R.id.search_item_username);
             searchCard = itemView.findViewById(R.id.profilePagePopUpLayout);
-
-            // Assume this ID for your RelativeLayout
         }
     }
 }

@@ -16,14 +16,16 @@ public class WrappedModel {
     private List<String> topTracks;
     private String userId;
     private int likes;
+    private String identifier;
 
-    public WrappedModel(String description, List<String> topArtists, List<String> topGenres, List<String> topTracks, String userId) {
+    public WrappedModel(String description, List<String> topArtists, List<String> topGenres, List<String> topTracks, String userId, String identifier) {
         this.description = description;
         this.topGenres = topGenres;
         this.topTracks = topTracks;
         this.userId = userId;
         this.topArtists = topArtists;
         this.likes = 0;
+        this.identifier = identifier;
     }
 
     public static List<WrappedModel> loadData(FirebaseFirestore mStore, FirebaseAuth mAuth, DataCallback callback) {
@@ -38,8 +40,8 @@ public class WrappedModel {
                         List<String> topGenres = (List<String>) documentSnapshot.get("TopGenres");
                         List<String> topTracks = (List<String>) documentSnapshot.get("TopTracks");
                         String userId = mAuth.getCurrentUser().getEmail().replace("@gmail.com", "");
-
-                        WrappedModel wrappedModel = new WrappedModel(description, topArtists, topGenres, topTracks, userId);
+                        String postID = documentSnapshot.getString("PostId");
+                        WrappedModel wrappedModel = new WrappedModel(description, topArtists, topGenres, topTracks, userId, postID);
                         wrappedModels.add(wrappedModel);
                     }
                     callback.onCallback(wrappedModels);
@@ -79,5 +81,8 @@ public class WrappedModel {
     public void unlikeWrap() {
         likes--;
         //needs some implementation as to how to ensure one person does not like more than once
+    }
+    public String getIdentifier() {
+        return this.identifier;
     }
 }

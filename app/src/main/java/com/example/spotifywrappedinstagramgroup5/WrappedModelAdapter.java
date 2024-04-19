@@ -59,6 +59,7 @@ public class WrappedModelAdapter extends RecyclerView.Adapter<WrappedModelAdapte
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), CommentPage.class);
+                intent.putExtra("postID", wrappedModel.getIdentifier());
                 v.getContext().startActivity(intent);
             }
         });
