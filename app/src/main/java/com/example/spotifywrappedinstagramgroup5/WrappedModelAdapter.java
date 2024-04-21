@@ -13,6 +13,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.spotifywrappedinstagramgroup5.R;
+
+import org.w3c.dom.Comment;
+
 import java.util.List;
 
 public class WrappedModelAdapter extends RecyclerView.Adapter<WrappedModelAdapter.ViewHolder> {
@@ -38,21 +41,26 @@ public class WrappedModelAdapter extends RecyclerView.Adapter<WrappedModelAdapte
         WrappedModel wrappedModel = wrappedModelList.get(position);
         holder.textUsername.setText(wrappedModel.getUserId()); // Assuming the userId is the username
         holder.textDescription.setText(wrappedModel.getDescription());
-        holder.textTracks.setText(""); //wrappedModel.getTracks()
-        holder.textArtists.setText(""); //wrappedModel.getArtists()
-        holder.textGenres.setText(""); // wrappedModel.getGenres()
 
         holder.imagePost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, SpotifyWrappedPopUp.class);
-                intent.putExtra("userID", wrappedModel.getUserId());
-                intent.putExtra("description", wrappedModel.getDescription());
-                intent.putExtra("tracks", wrappedModel.getTracks());
-                intent.putExtra("artists", wrappedModel.getArtists());
-                intent.putExtra("genres", wrappedModel.getGenres());
+                Intent intent = new Intent(context, SpotifyWrappedInitialPage.class);
+//                intent.putExtra("userID", wrappedModel.getUserId());
+//                intent.putExtra("description", wrappedModel.getDescription());
+//                intent.putExtra("tracks", wrappedModel.getTracks());
+//                intent.putExtra("artists", wrappedModel.getArtists());
+//                intent.putExtra("genres", wrappedModel.getGenres());
                 context.startActivity(intent);
-                Toast.makeText(context.getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context.getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+            }
+        });
+        holder.commentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), CommentPage.class);
+                intent.putExtra("postID", wrappedModel.getIdentifier());
+                v.getContext().startActivity(intent);
             }
         });
         Log.d("e", wrappedModel.getDescription());
@@ -67,9 +75,8 @@ public class WrappedModelAdapter extends RecyclerView.Adapter<WrappedModelAdapte
         public ImageView imagePost;
         public TextView textUsername;
         public TextView textDescription;
-        public TextView textArtists;
-        public TextView textTracks;
-        public TextView textGenres;
+        public ImageView commentButton;
+
 
 
         public ViewHolder(View itemView) {
@@ -77,9 +84,7 @@ public class WrappedModelAdapter extends RecyclerView.Adapter<WrappedModelAdapte
             imagePost = itemView.findViewById(R.id.image_post);
             textUsername = itemView.findViewById(R.id.text_username);
             textDescription = itemView.findViewById(R.id.text_description);
-            textArtists = itemView.findViewById(R.id.text_artists);
-            textGenres = itemView.findViewById(R.id.text_genres);
-            textTracks = itemView.findViewById(R.id.text_tracks);
+            commentButton = itemView.findViewById(R.id.comment_icon);
         }
     }
 }
