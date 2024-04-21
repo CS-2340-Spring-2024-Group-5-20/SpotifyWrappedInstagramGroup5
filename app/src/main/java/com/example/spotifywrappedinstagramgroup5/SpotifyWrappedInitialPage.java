@@ -1,25 +1,21 @@
 package com.example.spotifywrappedinstagramgroup5;
 
+import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.spotifywrappedinstagramgroup5.databinding.SpotifyWrapPageBinding;
 import com.example.spotifywrappedinstagramgroup5.databinding.SpotifyWrappedInitialPageBinding;
-import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SpotifyWrappedInitialPage extends AppCompatActivity {
-    FirebaseFirestore mStore;
     SpotifyWrappedInitialPageBinding binding;
-    TextView initialPageText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +32,7 @@ public class SpotifyWrappedInitialPage extends AppCompatActivity {
         animationDrawable.start();
 
         // Set up the back button
-        ImageView backButton = findViewById(R.id.wrapPageBackButton);
+        ImageView backButton = findViewById(R.id.escape);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,5 +42,29 @@ public class SpotifyWrappedInitialPage extends AppCompatActivity {
         // Start animation for TypeWriter
         TypeWriter initialPageText = findViewById(R.id.initialPageText);
         initialPageText.startAnimation();
+
+        ImageView forwardButton = findViewById(R.id.imageView);
+        Intent intent = getIntent();
+        if (intent != null) {
+            String userId = intent.getStringExtra("userID");
+            List<String> tracks = intent.getStringArrayListExtra("tracks");
+            List<String> artists = intent.getStringArrayListExtra("artists");
+            List<String> genres = intent.getStringArrayListExtra("genres");
+
+            forwardButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Create a new Intent object for the SpotifyWrappedGenrePage activity
+                    Intent newIntent = new Intent(getApplicationContext(), SpotifyWrappedGenrePage.class);
+                    // Put extras with the appropriate keys and values
+                    newIntent.putExtra("userID", userId);
+                    newIntent.putStringArrayListExtra("tracks", (ArrayList<String>) tracks);
+                    newIntent.putStringArrayListExtra("artists", (ArrayList<String>) artists);
+                    newIntent.putStringArrayListExtra("genres", (ArrayList<String>) genres);
+                    // Start the new activity with the newIntent
+                    startActivity(newIntent);
+                }
+            });
+        }
     }
 }
