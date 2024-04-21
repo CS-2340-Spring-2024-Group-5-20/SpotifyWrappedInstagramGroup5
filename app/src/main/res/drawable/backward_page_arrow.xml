@@ -1,0 +1,12 @@
+<!-- res/drawable/backward_button.xml -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M16,19h-2v-14h2zM6,19l-6,-7l6,-7v14z" />
+
+</vector>

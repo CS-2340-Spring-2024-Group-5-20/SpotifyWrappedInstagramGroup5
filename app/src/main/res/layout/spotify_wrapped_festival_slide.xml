@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/spotifywrappedfest">
+
+    <ImageView
+        android:id="@+id/escape"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/x_logo" />
 
 
     <LinearLayout
@@ -15,8 +24,8 @@
         <!-- Festival Name -->
         <TextView
             android:id="@+id/user_festival_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/festival_font"
             android:text="Person's Name Music Festival"
@@ -32,8 +41,8 @@
         <!-- First Favorite Artist -->
         <TextView
             android:id="@+id/fest_artist_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/festival_font"
@@ -46,8 +55,8 @@
         <!-- Second Favorite Artist -->
         <TextView
             android:id="@+id/fest_artist_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/festival_font"
@@ -60,8 +69,8 @@
         <!-- Third Favorite Artist -->
         <TextView
             android:id="@+id/fest_artist_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/festival_font"
@@ -90,8 +99,8 @@
         <!-- First Favorite Artist's Favorite Song -->
         <TextView
             android:id="@+id/fest_song_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/festival_font"
@@ -104,8 +113,8 @@
         <!-- Second Favorite Artist's Favorite Song -->
         <TextView
             android:id="@+id/fest_song_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/festival_font"
@@ -118,8 +127,8 @@
         <!-- Third Favorite Artist's Favorite Song -->
         <TextView
             android:id="@+id/fest_song_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/festival_font"
@@ -130,4 +139,5 @@
             android:textSize="23sp" />
 
     </LinearLayout>
+
 </RelativeLayout>
