@@ -65,18 +65,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/spotifyWrappedFavoriteArtists" />
 
-    <TextView
-        android:id="@+id/spotifyWrappedLikesCounter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="690dp"
-        android:layout_marginEnd="328dp"
-        android:layout_marginBottom="22dp"
-        android:text="TextView"
+    <EditText
+        android:id="@+id/likesCountTextView"
+        android:layout_width="52dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="174dp"
+        android:layout_marginEnd="244dp"
+        android:layout_marginBottom="20dp"
+        android:ems="30"
+        android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/LikeButton"
+        app:layout_constraintTop_toBottomOf="@+id/spotifyWrappedFavoriteGenres"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ImageButton
+        android:id="@+id/LikeButton"
+        android:layout_width="94dp"
+        android:layout_height="81dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="139dp"
+        android:layout_marginEnd="297dp"
+        android:layout_marginBottom="20dp"
+        android:background="#00000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/spotifyWrappedFavoriteGenres"
+        app:srcCompat="@drawable/secondcroppedandroidstudioheart_85x76" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
