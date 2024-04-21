@@ -5,14 +5,17 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.Models.User;
+import com.example.spotifywrappedinstagramgroup5.CommentPage;
 import com.example.spotifywrappedinstagramgroup5.ProfilePageSearchPopOut;
 import com.example.spotifywrappedinstagramgroup5.R;
 import com.example.spotifywrappedinstagramgroup5.SpotifyWrappedPopUp;
@@ -22,10 +25,15 @@ import java.util.ArrayList;
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     private Context context;
     private ArrayList<User> list;
+    private static User returnableUser;
 
     public UserAdapter(Context context, ArrayList<User> list) {
         this.context = context;
         this.list = list;
+    }
+
+    public static User getUser() {
+        return returnableUser;
     }
 
     @NonNull
@@ -48,6 +56,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                 intent.putExtra("username", user.getUsername());
                 intent.putExtra("faveArtists", user.getFaveArtists());
                 intent.putExtra("mostPlayed", user.getMostPlayed());
+                returnableUser = user;
                 context.startActivity(intent);
                 Toast.makeText(context, "Profile opened for " + user.getUsername(), Toast.LENGTH_SHORT).show();
             }
@@ -59,15 +68,15 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         return list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView username;
-        public RelativeLayout searchCard; // This is the layout for the entire item
+        public CardView searchCard;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             username = itemView.findViewById(R.id.search_item_username);
-            searchCard = itemView.findViewById(R.id.profilePagePopUpLayout); // Assume this ID for your RelativeLayout
+            searchCard = itemView.findViewById(R.id.profilePagePopUpLayout);
         }
     }
 }
