@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -35,19 +37,67 @@ public class PostPage extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         mStore = FirebaseFirestore.getInstance();
 
-        WrappedModel.loadData(mStore, auth, new DataCallback() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.filter_options, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.spinner.setAdapter(adapter);
+
+        binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onCallback(List<WrappedModel> wrappedModelList) {
-                WrappedModelAdapter adapter = new WrappedModelAdapter(PostPage.this, wrappedModelList);
-                binding.recyclerView.setAdapter(adapter);
-                binding.recyclerView.setLayoutManager(new LinearLayoutManager(PostPage.this));
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedFilter = parent.getItemAtPosition(position).toString();
+                if (selectedFilter.equals("Filter by Likes")) {
+                    WrappedModel.loadData(mStore, auth, "likes", new DataCallback() {
+                        @Override
+                        public void onCallback(List<WrappedModel> wrappedModelList) {
+                            WrappedModelAdapter adapter = new WrappedModelAdapter(PostPage.this, wrappedModelList);
+                            binding.recyclerView.setAdapter(adapter);
+                            binding.recyclerView.setLayoutManager(new LinearLayoutManager(PostPage.this));
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            // Handle error
+                        }
+                    });
+                } else if (selectedFilter.equals("Filter by Comments")) {
+                    WrappedModel.loadData(mStore, auth, "comments", new DataCallback() {
+                        @Override
+                        public void onCallback(List<WrappedModel> wrappedModelList) {
+                            WrappedModelAdapter adapter = new WrappedModelAdapter(PostPage.this, wrappedModelList);
+                            binding.recyclerView.setAdapter(adapter);
+                            binding.recyclerView.setLayoutManager(new LinearLayoutManager(PostPage.this));
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            // Handle error
+                        }
+                    });
+                } else {
+                    WrappedModel.loadData(mStore, auth, "all", new DataCallback() {
+                        @Override
+                        public void onCallback(List<WrappedModel> wrappedModelList) {
+                            WrappedModelAdapter adapter = new WrappedModelAdapter(PostPage.this, wrappedModelList);
+                            binding.recyclerView.setAdapter(adapter);
+                            binding.recyclerView.setLayoutManager(new LinearLayoutManager(PostPage.this));
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            // Handle error
+                        }
+                    });
+                }
             }
 
             @Override
-            public void onError(Exception e) {
-                // Handle error
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do nothing
             }
         });
+
+
 
 
 
