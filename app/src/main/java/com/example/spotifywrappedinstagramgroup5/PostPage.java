@@ -73,5 +73,10 @@ public class PostPage extends AppCompatActivity {
             }
             return true;
         });
+
+        binding.addPostButton.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), PublishPage.class);
+            startActivity(intent);
+        });
     }
 }

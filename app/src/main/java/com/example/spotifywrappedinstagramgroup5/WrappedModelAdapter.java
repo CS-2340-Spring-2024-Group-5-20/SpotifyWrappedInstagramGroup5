@@ -40,7 +40,7 @@ public class WrappedModelAdapter extends RecyclerView.Adapter<WrappedModelAdapte
     @Override
     public void onBindViewHolder(@NonNull WrappedModelAdapter.ViewHolder holder, int position) {
         WrappedModel wrappedModel = wrappedModelList.get(position);
-        holder.textUsername.setText(wrappedModel.getUserId()); // Assuming the userId is the username
+        holder.textUsername.setText(wrappedModel.getTitle()); // Assuming the userId is the username
         holder.textDescription.setText(wrappedModel.getDescription());
 
         holder.imagePost.setOnClickListener(new View.OnClickListener() {
@@ -60,7 +60,7 @@ public class WrappedModelAdapter extends RecyclerView.Adapter<WrappedModelAdapte
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(activity, CommentPage.class); // Use 'activity' instead of 'context'
-                intent.putExtra("postID", wrappedModel.getIdentifier());
+                intent.putExtra("postID", wrappedModel.getPostId());
                 activity.startActivity(intent); // Use 'activity' instead of 'context'
             }
         });
