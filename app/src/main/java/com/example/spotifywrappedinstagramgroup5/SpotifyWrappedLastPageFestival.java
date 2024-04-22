@@ -38,7 +38,7 @@ public class SpotifyWrappedLastPageFestival extends AppCompatActivity {
             List<String> artists = getIntent().getStringArrayListExtra("artists");
 
             // Set the festival name
-            binding.userFestivalName.setText(userId);
+            binding.userFestivalName.setText("Summary");
 
             // Set the favorite artists
             if (artists != null && !artists.isEmpty()) {
