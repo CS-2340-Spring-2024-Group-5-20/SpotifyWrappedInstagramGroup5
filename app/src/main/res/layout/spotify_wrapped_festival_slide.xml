@@ -93,7 +93,15 @@
         <LinearLayout
             android:id="@+id/linear_layout_genre"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp" />
+
+        <!-- First Favorite Artist -->
+
+        <TextView
+            android:id="@+id/fest_artist_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
             android:orientation="vertical">
 
@@ -207,18 +215,56 @@
 
     <!-- Add a gap between artists and songs -->
 
-    <!-- Song LinearLayout -->
+    <LinearLayout
+        android:id="@+id/linear_layout_songs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/linear_layout_artists"
+        android:layout_marginTop="16dp">
 
-    <!-- Genre LinearLayout -->
+        <!-- First Favorite Artist's Favorite Song -->
+        <TextView
+            android:id="@+id/fest_song_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/festival_font"
+            android:text="Favorite Song 1"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
 
-    <!-- Back Arrow -->
-    <ImageView
-        android:id="@+id/back_arrow"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        app:srcCompat="@drawable/backward_page_arrow"
-        android:layout_marginStart="10dp"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
+        <!-- Second Favorite Artist's Favorite Song -->
+        <TextView
+            android:id="@+id/fest_song_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/festival_font"
+            android:text="Favorite Song 2"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
+
+        <!-- Third Favorite Artist's Favorite Song -->
+        <TextView
+            android:id="@+id/fest_song_3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/festival_font"
+            android:text="Favorite Song 3"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="23sp" />
+
+    </LinearLayout>
 
 </RelativeLayout>

@@ -10,19 +10,15 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.spotifywrappedinstagramgroup5.databinding.SpotifyWrapPageBinding;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 public class SpotifyWrappedPopUp extends AppCompatActivity {
@@ -55,7 +51,7 @@ public class SpotifyWrappedPopUp extends AppCompatActivity {
             }
         });
 
-        ImageView likeButton = findViewById(R.id.LikeButton);
+        ImageView likeButton = findViewById(R.id.CardHolder);
         likeButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -84,7 +80,6 @@ public class SpotifyWrappedPopUp extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         CollectionReference wrapsRef = mStore.collection("Wraps");
         // create reference to Wraps collection
-        TextView likeCountTextView = findViewById(R.id.likesCountTextView);
         wrapsRef.whereEqualTo("PostId", postId)
                 // queries for Wrap in collection with corresponding postId
                 .get()
@@ -121,7 +116,6 @@ public class SpotifyWrappedPopUp extends AppCompatActivity {
                             Toast.makeText(context.getApplicationContext(), "Liked wrap", Toast.LENGTH_SHORT).show();
 
                         }
-                        likeCountTextView.setText(String.valueOf(likes));
 
                     }
                         });
