@@ -33,10 +33,10 @@ public class PostPage extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         mStore = FirebaseFirestore.getInstance();
 
-        List<WrappedModel> data = WrappedModel.loadData(mStore, auth, new DataCallback() {
+        WrappedModel.loadData(mStore, auth, new DataCallback() {
             @Override
             public void onCallback(List<WrappedModel> wrappedModelList) {
-                WrappedModelAdapter adapter = new WrappedModelAdapter(getApplicationContext(), wrappedModelList);
+                WrappedModelAdapter adapter = new WrappedModelAdapter(PostPage.this, wrappedModelList);
                 binding.recyclerView.setAdapter(adapter);
                 binding.recyclerView.setLayoutManager(new LinearLayoutManager(PostPage.this));
             }
@@ -50,7 +50,6 @@ public class PostPage extends AppCompatActivity {
         // Set up bottom navigation menu
         BottomNavigationView bottomMenu = binding.bottomMenu; // Corrected reference to bottom menu
         bottomMenu.setBackground(null); // Set background to null if needed
-        binding.bottomMenu.setBackground(null);
         binding.bottomMenu.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.home_button) {
                 Intent intent = new Intent(getApplicationContext(), HomePage.class);
