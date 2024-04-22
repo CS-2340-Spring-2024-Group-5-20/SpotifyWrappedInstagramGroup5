@@ -38,6 +38,7 @@
             android:exported="false" />
         <activity android:name=".SearchPage" />
         <activity android:name=".HomePage" />
+        <activity android:name=".MyWraps" />
         <activity android:name=".PostPage" />
         <activity
             android:name=".ProfilePage"
