@@ -48,7 +48,9 @@ public class SpotifyWrappedInitialPage extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();  // This will close the current activity and take you back to the previous one
+                Intent intent = new Intent(getApplicationContext(), HomePage.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);  // This will close the current activity and take you back to the previous one
             }
         });
         // Start animation for TypeWriter
@@ -75,7 +77,7 @@ public class SpotifyWrappedInitialPage extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     // Create a new Intent object for the SpotifyWrappedGenrePage activity
-                    Intent newIntent = new Intent(getApplicationContext(), SpotifyWrappedGenrePage.class);
+                    Intent newIntent = new Intent(getApplicationContext(), SpotifyWrappedAnotherPage.class);
                     // Put extras with the appropriate keys and values
                     newIntent.putExtra("userID", userId);
                     newIntent.putStringArrayListExtra("tracks", (ArrayList<String>) tracks);
