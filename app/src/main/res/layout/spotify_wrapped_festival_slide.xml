@@ -5,15 +5,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/spotifywrappedfest">
 
-    <ImageButton
-        android:id="@+id/CardHolder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:backgroundTint="#00000000"
-        app:srcCompat="@drawable/secondcroppedandroidstudioheart_85x76" />
-
     <ImageView
         android:id="@+id/escape"
         android:layout_width="24dp"
