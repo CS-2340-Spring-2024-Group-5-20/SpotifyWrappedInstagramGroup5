@@ -1,5 +1,6 @@
 package com.example.spotifywrappedinstagramgroup5;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -21,18 +22,18 @@ import java.util.List;
 public class WrappedModelAdapter extends RecyclerView.Adapter<WrappedModelAdapter.ViewHolder> {
 
     private List<WrappedModel> wrappedModelList;
-    private Context context;
+    private Activity activity; // Change context to Activity
     private ImageView imageView;
 
-    public WrappedModelAdapter(Context context, List<WrappedModel> wrappedModelList) {
-        this.context = context;
+    public WrappedModelAdapter(Activity activity, List<WrappedModel> wrappedModelList) {
+        this.activity = activity;
         this.wrappedModelList = wrappedModelList;
     }
 
     @NonNull
     @Override
     public WrappedModelAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.homepage_cards, parent, false);
+        View view = LayoutInflater.from(activity).inflate(R.layout.homepage_cards, parent, false);
         return new ViewHolder(view);
     }
 
@@ -45,24 +46,25 @@ public class WrappedModelAdapter extends RecyclerView.Adapter<WrappedModelAdapte
         holder.imagePost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, SpotifyWrappedInitialPage.class);
+                Intent intent = new Intent(activity, SpotifyWrappedInitialPage.class); // Use 'activity' instead of 'context'
                 intent.putExtra("userID", wrappedModel.getUserId());
                 intent.putExtra("description", wrappedModel.getDescription());
                 intent.putExtra("tracks", wrappedModel.getTracks());
                 intent.putExtra("artists", wrappedModel.getArtists());
                 intent.putExtra("genres", wrappedModel.getGenres());
-                context.startActivity(intent);
-//                Toast.makeText(context.getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+                activity.startActivity(intent); // Use 'activity' instead of 'context'
             }
         });
+
         holder.commentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), CommentPage.class);
+                Intent intent = new Intent(activity, CommentPage.class); // Use 'activity' instead of 'context'
                 intent.putExtra("postID", wrappedModel.getIdentifier());
-                v.getContext().startActivity(intent);
+                activity.startActivity(intent); // Use 'activity' instead of 'context'
             }
         });
+
         Log.d("e", wrappedModel.getDescription());
     }
 
