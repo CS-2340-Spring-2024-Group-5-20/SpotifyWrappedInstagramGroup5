@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -134,6 +135,7 @@ public class WrappedModelAdapter extends RecyclerView.Adapter<WrappedModelAdapte
                             document.getReference().update("LikedUserIds", likedIDS);
                             document.getReference().update("LikeCount", likes);
                             //updates both relevant fields
+                            Toast.makeText(activity, "Post Unliked", Toast.LENGTH_SHORT).show();
                         } else {
                             likes++;
                             likedIDS.add(currentUser.getUid());
@@ -141,6 +143,7 @@ public class WrappedModelAdapter extends RecyclerView.Adapter<WrappedModelAdapte
                             document.getReference().update("LikedUserIds", likedIDS);
                             document.getReference().update("LikeCount", likes);
                             // updates both relevant fields
+                            Toast.makeText(activity, "Post Liked", Toast.LENGTH_SHORT).show();
 
                         }
 
