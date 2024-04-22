@@ -100,7 +100,15 @@ public class HomePage extends AppCompatActivity {
         TimeFrame[] timeFrames = TimeFrame.values();
         String[] items = new String[timeFrames.length];
         for (int i = 0; i < timeFrames.length; i++) {
-            items[i] = timeFrames[i].toString();
+            if (timeFrames[i].toString().equals("long_term")) {
+                items[i] = "1 year";
+            } else if (timeFrames[i].toString().equals("medium_term")) {
+                items[i] = "6 months";
+            } else if (timeFrames[i].toString().equals("short_term")) {
+                items[i] = "1 months";
+            } else {
+                items[i] = timeFrames[i].toString();
+            }
         }
 
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -125,15 +133,15 @@ public class HomePage extends AppCompatActivity {
                 selectedTimeFrame = TimeFrame.long_term;
             }
         });
-        Button viewWrapTempButton = findViewById(R.id.view_wrap_temp);
-        viewWrapTempButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Inflate the SpotifyWrappedInitialPage activity
-                Intent intent = new Intent(getApplicationContext(), SpotifyWrappedInitialPage.class);
-                startActivity(intent);
-            }
-        });
+//        Button viewWrapTempButton = findViewById(R.id.view_wrap_temp);
+//        viewWrapTempButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Inflate the SpotifyWrappedInitialPage activity
+//                Intent intent = new Intent(getApplicationContext(), SpotifyWrappedInitialPage.class);
+//                startActivity(intent);
+//            }
+//        });
 
 
         binding.buttonPost.setOnClickListener(view -> {
@@ -148,7 +156,7 @@ public class HomePage extends AppCompatActivity {
                         throw new RuntimeException(e);
                     }
                 }
-                Toast.makeText(HomePage.this, "Successfully Posted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomePage.this, "Successfully Generated, See in \"My Wraps\" on the profile page", Toast.LENGTH_LONG).show();
 
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);

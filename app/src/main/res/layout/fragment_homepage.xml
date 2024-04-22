@@ -33,6 +33,8 @@
             android:id="@+id/add_post_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center|right|top"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="60dp"
             android:text="Post"
             tools:layout_marginLeft="0" />
@@ -40,7 +42,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="130dp"
+            android:layout_marginTop="110dp"
             tools:ignore="UselessParent">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -53,9 +55,20 @@
 
         <Spinner
             android:id="@+id/spinner"
-            android:layout_width="match_parent"
+            android:layout_width="300sp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="110dp" />
+            android:layout_gravity="top|left"
+            android:layout_marginTop="80dp"
+            android:background="#FDFCFC"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:text="Filter:"
+            android:textColor="#F8F8F8" />
 
     </FrameLayout>
 

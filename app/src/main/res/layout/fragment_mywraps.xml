@@ -22,7 +22,7 @@
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
     <include
-        layout="@layout/home_top"/>
+        layout="@layout/mywraps_top"/>
 
     <FrameLayout
         android:id="@+id/frame_layout"
@@ -32,7 +32,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="110dp"
+            android:layout_marginTop="60dp"
             tools:ignore="UselessParent">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -43,14 +43,15 @@
 
         </ScrollView>
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            android:text="Your Wraps:"
-            android:textColor="#FFFFFF"
-            tools:textSize="30sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/textView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="60dp"-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:text="Your Wraps:"-->
+<!--            android:textColor="#FFFFFF"-->
+<!--            tools:textSize="30dp" />-->
 
     </FrameLayout>
 

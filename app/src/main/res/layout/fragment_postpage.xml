@@ -44,34 +44,43 @@
         <EditText
             android:id="@+id/edit_text_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="38dp"
             android:layout_marginBottom="16dp"
             android:background="@color/white"
-            android:hint="Write something..."
-            android:padding="10dp"
-            android:textSize="16sp"
+            android:gravity="top"
+            android:hint="Enter title..."
             android:minLines="5"
-            android:gravity="top" />
+            android:padding="10dp"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Time frame:"
+            android:textColor="#F8F7F7" />
 
         <Spinner
             android:id="@+id/timeframe_picker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="16dp"
+            android:background="#FAFAFA"
+            android:textAlignment="center" />
 
         <!-- Placeholder ImageView -->
-        <Button
-            android:id="@+id/view_wrap_temp"
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:layout_marginBottom="16dp"
-            android:backgroundTint="@color/light_blue"
-            android:text="View Wrap"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-        />
+<!--        <Button-->
+<!--            android:id="@+id/view_wrap_temp"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="64dp"-->
+<!--            android:layout_marginBottom="16dp"-->
+<!--            android:backgroundTint="@color/light_blue"-->
+<!--            android:text="View Wrap"-->
+<!--            android:textColor="@android:color/white"-->
+<!--            android:textSize="18sp"-->
+<!--            android:paddingTop="16dp"-->
+<!--            android:paddingBottom="16dp"-->
+<!--        />-->
 
         <!-- Post Button Box -->
         <Button
@@ -80,7 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:backgroundTint="@color/light_blue"
-            android:text="Post"
+            android:text="Generate"
             android:textColor="@android:color/white" />
 
     </LinearLayout>
