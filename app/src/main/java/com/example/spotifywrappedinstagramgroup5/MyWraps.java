@@ -37,7 +37,7 @@ public class MyWraps extends AppCompatActivity {
         List<WrappedModel> data = WrappedModel.loadMyData(mStore, auth, new DataCallback() {
             @Override
             public void onCallback(List<WrappedModel> wrappedModelList) {
-                WrappedModelAdapter adapter = new WrappedModelAdapter(getApplicationContext(), wrappedModelList);
+                WrappedModelAdapter adapter = new WrappedModelAdapter(MyWraps.this, wrappedModelList);
                 binding.recyclerView.setAdapter(adapter);
                 binding.recyclerView.setLayoutManager(new LinearLayoutManager(MyWraps.this));
             }
