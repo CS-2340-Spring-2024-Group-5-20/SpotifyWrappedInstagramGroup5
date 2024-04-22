@@ -44,10 +44,10 @@ public class SpotifyWrappedGenrePage extends AppCompatActivity {
                 Toast.makeText(context.getApplicationContext(), "made it here", Toast.LENGTH_SHORT).show();
 
                 binding.genreSpot1.setText(userId);
-                binding.genreSpot2.setText(genres.get(1));
-                binding.genreSpot3.setText(genres.get(2));
-                binding.genreSpot4.setText(genres.get(3));
-                binding.genreSpot5.setText(genres.get(4));
+                binding.genreSpot2.setText(genres.get(0));
+                binding.genreSpot3.setText(genres.get(1));
+                binding.genreSpot4.setText(genres.get(2));
+                binding.genreSpot5.setText(genres.get(3));
             } else {
                 binding.genreSpot1.setText("UNAVAILABLE");
                 binding.genreSpot2.setText("UNAVAILABLE");

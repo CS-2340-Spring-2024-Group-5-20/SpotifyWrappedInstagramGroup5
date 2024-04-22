@@ -100,6 +100,18 @@ public class WrappedModel {
         return topTracks != null ? TextUtils.join(", ", this.topTracks) : "null";
     }
 
+    public ArrayList<String> getTrackList() {
+        return (ArrayList<String>)topTracks;
+    }
+
+    public ArrayList<String> getArtistList() {
+        return (ArrayList<String>)topArtists;
+    }
+
+    public ArrayList<String> getGenreList() {
+        return (ArrayList<String>)topGenres;
+    }
+
     public String getArtists(){
         return topArtists != null ? TextUtils.join(", ", this.topArtists) : "";
     }

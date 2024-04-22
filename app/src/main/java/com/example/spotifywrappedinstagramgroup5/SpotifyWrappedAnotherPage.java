@@ -2,6 +2,7 @@ package com.example.spotifywrappedinstagramgroup5;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,11 +30,11 @@ public class SpotifyWrappedAnotherPage extends AppCompatActivity {
             List<String> genres = getIntent().getStringArrayListExtra("genres");
             // Populate the genre text views
             if (genres != null && artists.size() >= 5) {
-                binding.artistsSpot1.setText(artists.get(1));
-                binding.artistsSpot2.setText(artists.get(2));
-                binding.artistsSpot3.setText(artists.get(3));
-                binding.artistsSpot4.setText(artists.get(4));
-                binding.artistsSpot5.setText(artists.get(5));
+                binding.artistsSpot1.setText(artists.get(0));
+                binding.artistsSpot2.setText(artists.get(1));
+                binding.artistsSpot3.setText(artists.get(2));
+                binding.artistsSpot4.setText(artists.get(3));
+                binding.artistsSpot5.setText(artists.get(4));
             } else {
                 binding.artistsSpot1.setText("UNAVAILABLE");
                 binding.artistsSpot2.setText("UNAVAILABLE");
