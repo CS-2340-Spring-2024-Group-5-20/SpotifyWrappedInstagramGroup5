@@ -63,7 +63,7 @@ public class WrappedModelAdapter extends RecyclerView.Adapter<WrappedModelAdapte
 
             @Override
             public void onClick(View v) {
-                toggleLike("a80f3b4d-6594-4293-ac88-c14c42da2de9");
+                toggleLike(wrappedModel.getPostId());
             }
         });
 
@@ -126,17 +126,17 @@ public class WrappedModelAdapter extends RecyclerView.Adapter<WrappedModelAdapte
 
                         long likes =  (long) wrapData.get("LikeCount");
                         // creates local number of likes
-                        if (likedIDS.contains(currentUser.getEmail())) {
+                        if (likedIDS.contains(currentUser.getUid())) {
                             // checks if user already liked the wrap
                             likes--;
-                            likedIDS.remove(currentUser.getEmail());
+                            likedIDS.remove(currentUser.getUid());
                             // will decrement likes and remove user from "likes" array
                             document.getReference().update("LikedUserIds", likedIDS);
                             document.getReference().update("LikeCount", likes);
                             //updates both relevant fields
                         } else {
                             likes++;
-                            likedIDS.add(currentUser.getEmail());
+                            likedIDS.add(currentUser.getUid());
                             // will increment likes and add user to likes array
                             document.getReference().update("LikedUserIds", likedIDS);
                             document.getReference().update("LikeCount", likes);

@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -27,6 +28,7 @@
             android:src="@drawable/fade1" />
 
         <!-- New LinearLayout for Text Views -->
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -35,6 +37,7 @@
 
             <!-- TextView for Username -->
 
+            <!-- TextView for Description -->
             <TextView
                 android:id="@+id/text_username"
                 android:layout_width="wrap_content"
@@ -44,11 +47,10 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <!-- TextView for Description -->
             <TextView
                 android:id="@+id/text_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="170sp"
+                android:layout_height="70sp"
                 android:layout_marginTop="5dp"
                 android:text="Description goes here. This is a sample description text for the post."
                 android:textColor="@android:color/black"
@@ -56,21 +58,25 @@
 
             <ImageButton
                 android:id="@+id/LikesButton"
-                android:layout_width="97dp"
-                android:layout_height="wrap_content"
+                android:layout_width="44dp"
+                android:layout_height="41dp"
+                android:layout_gravity="bottom|right"
+                android:adjustViewBounds="true"
                 android:backgroundTint="#00000000"
+                android:scaleType="fitXY"
                 app:srcCompat="@drawable/secondcroppedandroidstudioheart_85x76"
                 tools:ignore="SpeakableTextPresentCheck" />
+
+            <ImageView
+                android:id="@+id/comment_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="0dp"
+                android:src="@drawable/comment" />
 
         </LinearLayout>
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/comment_icon"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="0dp"
-        android:src="@drawable/comment" />
 </androidx.cardview.widget.CardView>
