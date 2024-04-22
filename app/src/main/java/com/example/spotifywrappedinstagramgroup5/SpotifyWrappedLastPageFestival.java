@@ -1,5 +1,6 @@
 package com.example.spotifywrappedinstagramgroup5;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -53,6 +54,15 @@ public class SpotifyWrappedLastPageFestival extends AppCompatActivity {
 
         ImageView backButton = findViewById(R.id.escape);
         backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), HomePage.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);            }
+        });
+        ImageView backArrow = findViewById(R.id.back_arrow);
+
+        backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();  // This will close the current activity and take you back to the previous one

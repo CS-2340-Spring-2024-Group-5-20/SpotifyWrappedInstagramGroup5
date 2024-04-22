@@ -8,18 +8,19 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.spotifywrappedinstagramgroup5.databinding.SpotifyWrappedAnotherPageBinding;
 import com.example.spotifywrappedinstagramgroup5.databinding.SpotifyWrappedGenrePageBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpotifyWrappedGenrePage extends AppCompatActivity {
-    SpotifyWrappedGenrePageBinding binding;
+public class SpotifyWrappedAnotherPage extends AppCompatActivity {
+    SpotifyWrappedAnotherPageBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = SpotifyWrappedGenrePageBinding.inflate(getLayoutInflater());
+        binding = SpotifyWrappedAnotherPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         // Retrieve the data passed from the previous activity
@@ -29,28 +30,29 @@ public class SpotifyWrappedGenrePage extends AppCompatActivity {
             List<String> artists = getIntent().getStringArrayListExtra("artists");
             List<String> genres = getIntent().getStringArrayListExtra("genres");
             // Populate the genre text views
-            if (genres != null && genres.size() >= 5) {
-                binding.genreSpot1.setText(userId);
-                binding.genreSpot2.setText(genres.get(1));
-                binding.genreSpot3.setText(genres.get(2));
-                binding.genreSpot4.setText(genres.get(3));
-                binding.genreSpot5.setText(genres.get(4));
+            if (genres != null && artists.size() >= 5) {
+                binding.artistsSpot1.setText(artists.get(1));
+                binding.artistsSpot2.setText(artists.get(2));
+                binding.artistsSpot3.setText(artists.get(3));
+                binding.artistsSpot4.setText(artists.get(4));
+                binding.artistsSpot5.setText(artists.get(5));
             } else {
-                binding.genreSpot1.setText("UNAVAILABLE");
-                binding.genreSpot2.setText("UNAVAILABLE");
-                binding.genreSpot3.setText("UNAVAILABLE");
-                binding.genreSpot4.setText("UNAVAILABLE");
-                binding.genreSpot5.setText("UNAVAILABLE");
+                binding.artistsSpot1.setText("UNAVAILABLE");
+                binding.artistsSpot2.setText("UNAVAILABLE");
+                binding.artistsSpot3.setText("UNAVAILABLE");
+                binding.artistsSpot4.setText("UNAVAILABLE");
+                binding.artistsSpot5.setText("UNAVAILABLE");
             }
             ImageView forward = findViewById(R.id.forward_arrow);
             forward.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // Create a new Intent object for the SpotifyWrappedGenrePage activity
-                    Intent newIntent = new Intent(getApplicationContext(), SpotifyWrappedLastPageFestival.class);
+                    Intent newIntent = new Intent(getApplicationContext(), SpotifyWrappedGenrePage.class);
                     // Put extras with the appropriate keys and values
                     newIntent.putExtra("userID", userId);
                     newIntent.putStringArrayListExtra("tracks", (ArrayList<String>) tracks);
+                    newIntent.putStringArrayListExtra("genres", (ArrayList<String>) genres);
                     newIntent.putStringArrayListExtra("artists", (ArrayList<String>) artists);
                     // Start the new activity with the newIntent
                     startActivity(newIntent);
@@ -63,8 +65,7 @@ public class SpotifyWrappedGenrePage extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), HomePage.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent); // This will close the current activity and take you back to the previous one
-            }
+                startActivity(intent);            }
         });
         ImageView backArrow = findViewById(R.id.back_arrow);
         backArrow.setOnClickListener(new View.OnClickListener() {
