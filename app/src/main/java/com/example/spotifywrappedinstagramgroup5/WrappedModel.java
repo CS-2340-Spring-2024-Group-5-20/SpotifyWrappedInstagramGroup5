@@ -16,18 +16,18 @@ public class WrappedModel {
     private List<String> topTracks;
     private String userId;
     private int likes;
-    private String identifier;
+    private String postId;
     private String title;
     private String status;
 
-    public WrappedModel(String description, List<String> topArtists, List<String> topGenres, List<String> topTracks, String userId, String identifier, String title, String status) {
+    public WrappedModel(String description, List<String> topArtists, List<String> topGenres, List<String> topTracks, String userId, String postId, String title, String status) {
         this.description = description;
         this.topGenres = topGenres;
         this.topTracks = topTracks;
         this.userId = userId;
         this.topArtists = topArtists;
         this.likes = 0;
-        this.identifier = identifier;
+        this.postId = postId;
         this.title = title;
         this.status = status;
     }
@@ -48,7 +48,7 @@ public class WrappedModel {
                         String title = documentSnapshot.getString("Title");
                         String status = documentSnapshot.getString("Status");
                         WrappedModel wrappedModel = new WrappedModel(description, topArtists, topGenres, topTracks, userId, postID, title, status);
-                        if (status.equals("private")) {
+                        if (status.equals("public")) {
                             wrappedModels.add(wrappedModel);
                         }
                     }
@@ -111,11 +111,12 @@ public class WrappedModel {
         return (String.valueOf(likes));
     }
 
-    public String getIdentifier() {
-        return this.identifier;
+    public String getPostId() {
+        return this.postId;
     }
 
     public String getTitle() {return this.title; }
 
     public String getStatus() {return this.status; }
+
 }
