@@ -32,7 +32,7 @@ public class WrappedModel {
         this.status = status;
     }
 
-    public static List<WrappedModel> loadData(FirebaseFirestore mStore, FirebaseAuth mAuth, DataCallback callback) {
+    public static List<WrappedModel> loadData(FirebaseFirestore mStore, FirebaseAuth mAuth, String filter, DataCallback callback) {
         List<WrappedModel> wrappedModels = new ArrayList<>();
 
         mStore.collection("Wraps")
@@ -47,9 +47,22 @@ public class WrappedModel {
                         String postID = documentSnapshot.getString("PostId");
                         String title = documentSnapshot.getString("Title");
                         String status = documentSnapshot.getString("Status");
+                        List<String> likedUserIds = (List<String>) documentSnapshot.get("LikedUserIds");
+                        List<String> commentedIds = (List<String>) documentSnapshot.get("CommentedIds");
+
                         WrappedModel wrappedModel = new WrappedModel(description, topArtists, topGenres, topTracks, userId, postID, title, status);
                         if (status.equals("public")) {
-                            wrappedModels.add(wrappedModel);
+                            if (filter.equals("likes")) {
+                                if(likedUserIds.contains(mAuth.getUid())) {
+                                    wrappedModels.add(wrappedModel);
+                                }
+                            } else if (filter.equals("comments")) {
+                                if(commentedIds.contains(mAuth.getUid())) {
+                                    wrappedModels.add(wrappedModel);
+                                }
+                            } else {
+                                wrappedModels.add(wrappedModel);
+                            }
                         }
                     }
                     callback.onCallback(wrappedModels);
