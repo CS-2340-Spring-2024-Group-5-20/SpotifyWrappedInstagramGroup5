@@ -18,8 +18,9 @@ public class WrappedModel {
     private int likes;
     private String identifier;
     private String title;
+    private String status;
 
-    public WrappedModel(String description, List<String> topArtists, List<String> topGenres, List<String> topTracks, String userId, String identifier, String title) {
+    public WrappedModel(String description, List<String> topArtists, List<String> topGenres, List<String> topTracks, String userId, String identifier, String title, String status) {
         this.description = description;
         this.topGenres = topGenres;
         this.topTracks = topTracks;
@@ -28,6 +29,7 @@ public class WrappedModel {
         this.likes = 0;
         this.identifier = identifier;
         this.title = title;
+        this.status = status;
     }
 
     public static List<WrappedModel> loadData(FirebaseFirestore mStore, FirebaseAuth mAuth, DataCallback callback) {
@@ -44,8 +46,39 @@ public class WrappedModel {
                         String userId = mAuth.getCurrentUser().getEmail().replace("@gmail.com", "");
                         String postID = documentSnapshot.getString("PostId");
                         String title = documentSnapshot.getString("Title");
-                        WrappedModel wrappedModel = new WrappedModel(description, topArtists, topGenres, topTracks, userId, postID, title);
-                        wrappedModels.add(wrappedModel);
+                        String status = documentSnapshot.getString("Status");
+                        WrappedModel wrappedModel = new WrappedModel(description, topArtists, topGenres, topTracks, userId, postID, title, status);
+                        if (status.equals("private")) {
+                            wrappedModels.add(wrappedModel);
+                        }
+                    }
+                    callback.onCallback(wrappedModels);
+                })
+                .addOnFailureListener(e -> callback.onError(e));
+
+
+        return wrappedModels;
+    }
+
+    public static List<WrappedModel> loadMyData(FirebaseFirestore mStore, FirebaseAuth mAuth, DataCallback callback) {
+        List<WrappedModel> wrappedModels = new ArrayList<>();
+
+        mStore.collection("Wraps")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                        String description = documentSnapshot.getString("Description");
+                        List<String> topArtists = (List<String>) documentSnapshot.get("TopArtists");
+                        List<String> topGenres = (List<String>) documentSnapshot.get("TopGenres");
+                        List<String> topTracks = (List<String>) documentSnapshot.get("TopTracks");
+                        String userId = documentSnapshot.getString("UserId");
+                        String postID = documentSnapshot.getString("PostId");
+                        String title = documentSnapshot.getString("Title");
+                        String status = documentSnapshot.getString("Status");
+                        WrappedModel wrappedModel = new WrappedModel(description, topArtists, topGenres, topTracks, userId, postID, title, status);
+                        if (userId.equals(mAuth.getUid())) {
+                            wrappedModels.add(wrappedModel);
+                        }
                     }
                     callback.onCallback(wrappedModels);
                 })
@@ -81,4 +114,8 @@ public class WrappedModel {
     public String getIdentifier() {
         return this.identifier;
     }
+
+    public String getTitle() {return this.title; }
+
+    public String getStatus() {return this.status; }
 }

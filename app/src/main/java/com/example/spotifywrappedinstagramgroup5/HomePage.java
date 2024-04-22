@@ -143,7 +143,7 @@ public class HomePage extends AppCompatActivity {
             if (!content.isEmpty()) {
                 if (manager != null) {
                     try {
-                        manager.generateWrapped(HomePage.this, 5, selectedTimeFrame, "", content);
+                        String newWrappedId = manager.generateWrapped(HomePage.this, 5, selectedTimeFrame, "", content);
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }

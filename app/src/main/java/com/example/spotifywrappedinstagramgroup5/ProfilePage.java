@@ -27,7 +27,7 @@ public class ProfilePage extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseFirestore mStore;
 
-    Button editProfileButton, signOutButton;
+    Button editProfileButton, signOutButton, myWrapButton;
     FirebaseUser user;
 //    Button button; (NOT NEEDED ANYMORE CURRENTLY)
     Toolbar toolbar;
@@ -95,6 +95,7 @@ public class ProfilePage extends AppCompatActivity {
 
         editProfileButton = findViewById(R.id.edit_profile_button);
         signOutButton = findViewById(R.id.signout_button);
+        myWrapButton = findViewById(R.id.my_wrap_button);
 
         favArtist = findViewById(R.id.text_favorite_artist);
         mostPlayed = findViewById(R.id.text_most_played);
@@ -132,6 +133,14 @@ public class ProfilePage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SignoutPage.class);
+                startActivity(intent);
+            }
+        });
+
+        myWrapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MyWraps.class);
                 startActivity(intent);
             }
         });

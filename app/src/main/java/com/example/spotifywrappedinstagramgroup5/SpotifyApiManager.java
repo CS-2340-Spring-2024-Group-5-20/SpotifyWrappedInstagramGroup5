@@ -288,10 +288,11 @@ public class SpotifyApiManager {
     }
 
     private Set<String>[] generateWrappedArtists(Activity context, int limit, TimeFrame timeFrame, String newWrappedID) throws JSONException {
+        Log.d("TimeFrame", timeFrame.name());
         CompletableFuture<JSONArray> topArtistsFuture = makeApiCall(context, "me/top/artists", "limit=" + limit + "&time_range=" + timeFrame.name());
 
         // Process top artists and deduce genres
-        JSONArray topArtists = topArtistsFuture.join(); // Similar to above, get() does not block here
+        JSONArray topArtists = topArtistsFuture.join();
         Logger.log("REACHED 3");
         Set<String> artistNames = new LinkedHashSet<>();
         Set<String> genres = new LinkedHashSet<>(); // Use a set to avoid duplicates
@@ -315,7 +316,7 @@ public class SpotifyApiManager {
         CompletableFuture<JSONArray> topTracksFuture = makeApiCall(context, "me/top/tracks", "limit=" + limit + "&time_range=" + timeFrame.name());
 
         // Process top tracks
-        JSONArray topTracks = topTracksFuture.join(); // Note: get() does not block here because it's guaranteed to be complete
+        JSONArray topTracks = topTracksFuture.join();
         List<String> trackNames = new ArrayList<>();
         for (int i = 0; i < topTracks.length(); i++) {
             JSONObject track = topTracks.getJSONObject(i);
@@ -325,10 +326,11 @@ public class SpotifyApiManager {
        return trackNames;
     }
 
-    public void generateWrapped(Activity context, int limit, TimeFrame timeFrame, String description, String title) throws JSONException {
+    public String generateWrapped(Activity context, int limit, TimeFrame timeFrame, String description, String title) throws JSONException {
         HashMap<String, Object> wrappedData = new HashMap<>();
         wrappedData.put("Description", description);
         wrappedData.put("Title", title);
+        wrappedData.put("Status", "private");
 
         String newWrappedID = UUID.randomUUID().toString();
 
@@ -346,10 +348,14 @@ public class SpotifyApiManager {
         wrappedData.put("Comments", new HashMap<String, String>());
         wrappedData.put("CommentedIds", new ArrayList<String>());
 
+        Log.d("WrapGenerated", "Wrap Generated");
+
         mStore.collection("Wraps").document(newWrappedID)
                 .set(wrappedData)
                 .addOnSuccessListener(aVoid -> Log.d(TAG, "Spotify Wrapped successfully saved."))
                 .addOnFailureListener(e -> Log.e(TAG, "Error saving Spotify Wrapped: ", e));
+
+        return newWrappedID;
     }
 
     public void likeWrapped(String userId, String postId) {
@@ -392,6 +398,19 @@ public class SpotifyApiManager {
                 updatedData.put("CommentedIds", commentedIds);
                 updatedData.put("Comments", comments);
 
+                wrapDoc.update(updatedData);
+            } else {
+                Log.d("Document", "No such document");
+            }
+        }).addOnFailureListener(e -> Log.d("Document", "Failed with: ", e));
+    }
+
+    public void postWrapped(String postId, String userId, String description) {
+        DocumentReference wrapDoc = mStore.collection("Wraps").document("postId");
+        wrapDoc.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                HashMap<String, Object> updatedData = new HashMap<String, Object>();
+                updatedData.put("Status", "public");
                 wrapDoc.update(updatedData);
             } else {
                 Log.d("Document", "No such document");
