@@ -17,8 +17,9 @@ public class WrappedModel {
     private String userId;
     private int likes;
     private String identifier;
+    private String title;
 
-    public WrappedModel(String description, List<String> topArtists, List<String> topGenres, List<String> topTracks, String userId, String identifier) {
+    public WrappedModel(String description, List<String> topArtists, List<String> topGenres, List<String> topTracks, String userId, String identifier, String title) {
         this.description = description;
         this.topGenres = topGenres;
         this.topTracks = topTracks;
@@ -26,6 +27,7 @@ public class WrappedModel {
         this.topArtists = topArtists;
         this.likes = 0;
         this.identifier = identifier;
+        this.title = title;
     }
 
     public static List<WrappedModel> loadData(FirebaseFirestore mStore, FirebaseAuth mAuth, DataCallback callback) {
@@ -41,7 +43,8 @@ public class WrappedModel {
                         List<String> topTracks = (List<String>) documentSnapshot.get("TopTracks");
                         String userId = mAuth.getCurrentUser().getEmail().replace("@gmail.com", "");
                         String postID = documentSnapshot.getString("PostId");
-                        WrappedModel wrappedModel = new WrappedModel(description, topArtists, topGenres, topTracks, userId, postID);
+                        String title = documentSnapshot.getString("Title");
+                        WrappedModel wrappedModel = new WrappedModel(description, topArtists, topGenres, topTracks, userId, postID, title);
                         wrappedModels.add(wrappedModel);
                     }
                     callback.onCallback(wrappedModels);

@@ -136,7 +136,7 @@ public class PostPage extends AppCompatActivity {
             if (!content.isEmpty()) {
                 if (manager != null) {
                     try {
-                        manager.generateWrapped(PostPage.this, 5, selectedTimeFrame, content);
+                        manager.generateWrapped(PostPage.this, 5, selectedTimeFrame, "", content);
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
