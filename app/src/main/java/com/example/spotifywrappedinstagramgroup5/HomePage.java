@@ -125,6 +125,15 @@ public class HomePage extends AppCompatActivity {
                 selectedTimeFrame = TimeFrame.long_term;
             }
         });
+        Button viewWrapTempButton = findViewById(R.id.view_wrap_temp);
+        viewWrapTempButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Inflate the SpotifyWrappedInitialPage activity
+                Intent intent = new Intent(getApplicationContext(), SpotifyWrappedInitialPage.class);
+                startActivity(intent);
+            }
+        });
 
 
         binding.buttonPost.setOnClickListener(view -> {
