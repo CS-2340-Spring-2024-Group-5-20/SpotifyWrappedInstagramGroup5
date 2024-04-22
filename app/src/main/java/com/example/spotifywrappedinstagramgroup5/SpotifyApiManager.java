@@ -325,9 +325,10 @@ public class SpotifyApiManager {
        return trackNames;
     }
 
-    public void generateWrapped(Activity context, int limit, TimeFrame timeFrame, String description) throws JSONException {
+    public void generateWrapped(Activity context, int limit, TimeFrame timeFrame, String description, String title) throws JSONException {
         HashMap<String, Object> wrappedData = new HashMap<>();
         wrappedData.put("Description", description);
+        wrappedData.put("Title", title);
 
         String newWrappedID = UUID.randomUUID().toString();
 

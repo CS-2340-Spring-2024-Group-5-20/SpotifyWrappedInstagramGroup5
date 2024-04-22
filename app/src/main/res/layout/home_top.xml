@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Home"
+        android:text="Social"
         android:textSize="24sp"
         android:textColor="@color/black"
         android:textStyle="bold"
