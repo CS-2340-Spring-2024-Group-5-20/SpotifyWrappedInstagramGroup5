@@ -3,6 +3,8 @@ package com.example.spotifywrappedinstagramgroup5;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,6 +49,8 @@ public class PostPage extends AppCompatActivity {
             }
         });
 
+
+
         // Set up bottom navigation menu
         BottomNavigationView bottomMenu = binding.bottomMenu; // Corrected reference to bottom menu
         bottomMenu.setBackground(null); // Set background to null if needed
@@ -68,6 +72,11 @@ public class PostPage extends AppCompatActivity {
                 return true;
             }
             return true;
+        });
+
+        binding.addPostButton.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), PublishPage.class);
+            startActivity(intent);
         });
     }
 }
