@@ -2,50 +2,67 @@ package com.example.spotifywrappedinstagramgroup5;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.spotifywrappedinstagramgroup5.databinding.FragmentHomepageBinding;
 import com.example.spotifywrappedinstagramgroup5.databinding.FragmentPostpageBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.List;
+import org.json.JSONException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class HomePage extends AppCompatActivity {
-    FragmentHomepageBinding binding; // Corrected binding class
+    FragmentPostpageBinding binding; // Corrected binding class
     FirebaseAuth auth;
     FirebaseUser user;
+
     FirebaseFirestore mStore;
+
+    SpotifyApiManager manager;
+
+    TimeFrame selectedTimeFrame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = FragmentHomepageBinding.inflate(getLayoutInflater()); // Corrected binding initialization
+        binding = FragmentPostpageBinding.inflate(getLayoutInflater()); // Corrected binding initialization
         setContentView(binding.getRoot());
 
         // Initialize Firebase authentication
         auth = FirebaseAuth.getInstance();
         mStore = FirebaseFirestore.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        String userId = user.getUid();
+        DocumentReference docRef = mStore.collection("UserData").document(userId);
 
-        List<WrappedModel> data = WrappedModel.loadData(mStore, auth, new DataCallback() {
-            @Override
-            public void onCallback(List<WrappedModel> wrappedModelList) {
-                WrappedModelAdapter adapter = new WrappedModelAdapter(HomePage.this, wrappedModelList);
-                binding.recyclerView.setAdapter(adapter);
-                binding.recyclerView.setLayoutManager(new LinearLayoutManager(HomePage.this));
+        docRef.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                String token = (String)documentSnapshot.get("Spotify Token");
+                String code = (String)documentSnapshot.get("Spotify Code");
+                manager = new SpotifyApiManager(HomePage.this, code, token, mStore, auth);
+            } else {
+                Log.d("Document", "No such document");
             }
-
-            @Override
-            public void onError(Exception e) {
-                // Handle error
-            }
-        });
+        }).addOnFailureListener(e -> Log.d("Document", "Failed with: ", e));
 
         // Set up bottom navigation menu
         BottomNavigationView bottomMenu = binding.bottomMenu; // Corrected reference to bottom menu
@@ -69,6 +86,68 @@ public class HomePage extends AppCompatActivity {
                 return true;
             }
             return true;
+        });
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Map<String, Object> test = new HashMap<>();
+        test.put("FirstPost", "One");
+
+        EditText editTextContent = binding.editTextContent;
+
+        Spinner spinner = findViewById(R.id.timeframe_picker);
+
+        // Convert enum values to a string array
+        TimeFrame[] timeFrames = TimeFrame.values();
+        String[] items = new String[timeFrames.length];
+        for (int i = 0; i < timeFrames.length; i++) {
+            items[i] = timeFrames[i].toString();
+        }
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, items);
+
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
+        // Optional: Handle spinner item selections
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // Handle item selection
+                selectedTimeFrame = TimeFrame.values()[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                selectedTimeFrame = TimeFrame.long_term;
+            }
+        });
+
+
+        binding.buttonPost.setOnClickListener(view -> {
+            // Get the content from EditText
+            String content = editTextContent.getText().toString().trim();
+
+            if (!content.isEmpty()) {
+                if (manager != null) {
+                    try {
+                        manager.generateWrapped(HomePage.this, 5, selectedTimeFrame, "", content);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                Toast.makeText(HomePage.this, "Successfully Posted", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                // Handle case where EditText is empty
+                Toast.makeText(HomePage.this, "Post content cannot be empty.", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }
