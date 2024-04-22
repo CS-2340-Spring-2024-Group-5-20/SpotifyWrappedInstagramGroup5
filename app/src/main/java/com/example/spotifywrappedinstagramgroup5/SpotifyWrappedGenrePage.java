@@ -115,7 +115,6 @@ public class SpotifyWrappedGenrePage extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         CollectionReference wrapsRef = mStore.collection("Wraps");
         // create reference to Wraps collection
-        TextView likeCountTextView = findViewById(R.id.likesCountTextView);
         wrapsRef.whereEqualTo("PostId", postId)
                 // queries for Wrap in collection with corresponding postId
                 .get()
@@ -152,7 +151,6 @@ public class SpotifyWrappedGenrePage extends AppCompatActivity {
                             Toast.makeText(context.getApplicationContext(), "Liked wrap", Toast.LENGTH_SHORT).show();
 
                         }
-                        likeCountTextView.setText(String.valueOf(likes));
 
                     }
                 });
