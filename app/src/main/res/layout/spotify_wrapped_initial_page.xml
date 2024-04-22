@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient_list">
 
+
     <ImageView
         android:id="@+id/escape"
         android:layout_width="24dp"
@@ -23,18 +24,18 @@
         android:layout_height="0dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
+        android:fontFamily="@font/type_machine"
         android:gravity="center"
         android:text="Your social media for all Spotify wraps and experiences is here...\nFeel the music, Share the vibe!"
-        android:textSize="24sp"
         android:textColor="#FFFFFF"
-        app:textAllCaps="true"
-        android:fontFamily="@font/type_machine"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:textAllCaps="true" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -44,5 +45,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/forward_arrow" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

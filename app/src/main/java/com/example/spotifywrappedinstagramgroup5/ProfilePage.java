@@ -82,16 +82,16 @@ public class ProfilePage extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
-        ImageView imageView = findViewById(R.id.three_dot_extension);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle overflow menu click
-                // For example, navigate to SettingsActivity
-                Intent intent = new Intent(ProfilePage.this, Logout.class);
-                startActivity(intent);
-            }
-        });
+//        ImageView imageView = findViewById(R.id.three_dot_extension);
+//        imageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Handle overflow menu click
+//                // For example, navigate to SettingsActivity
+//                Intent intent = new Intent(ProfilePage.this, Logout.class);
+//                startActivity(intent);
+//            }
+//        });
 
         editProfileButton = findViewById(R.id.edit_profile_button);
         signOutButton = findViewById(R.id.signout_button);

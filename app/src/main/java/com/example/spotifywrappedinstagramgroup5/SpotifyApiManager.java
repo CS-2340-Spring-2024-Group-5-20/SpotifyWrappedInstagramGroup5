@@ -347,6 +347,7 @@ public class SpotifyApiManager {
         wrappedData.put("LikedUserIds", new ArrayList<String>());
         wrappedData.put("Comments", new HashMap<String, String>());
         wrappedData.put("CommentedIds", new ArrayList<String>());
+        wrappedData.put("PostId", newWrappedID);
 
         Log.d("WrapGenerated", "Wrap Generated");
 
@@ -359,7 +360,7 @@ public class SpotifyApiManager {
     }
 
     public void likeWrapped(String userId, String postId) {
-        DocumentReference wrapDoc = mStore.collection("Wraps").document("postId");
+        DocumentReference wrapDoc = mStore.collection("Wraps").document(postId);
         wrapDoc.get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
                 List<String> likedUserIds = (List<String>) documentSnapshot.get("LikedUserIds");
@@ -384,7 +385,7 @@ public class SpotifyApiManager {
         }).addOnFailureListener(e -> Log.d("Document", "Failed with: ", e));
     }
     public void addComment(String userId, String comment, String postId) {
-        DocumentReference wrapDoc = mStore.collection("Wraps").document("postId");
+        DocumentReference wrapDoc = mStore.collection("Wraps").document(postId);
         wrapDoc.get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
                 ArrayList<String> commentedIds = (ArrayList<String>)documentSnapshot.get("CommentedIds");
@@ -406,15 +407,8 @@ public class SpotifyApiManager {
     }
 
     public void postWrapped(String postId, String userId, String description) {
-        DocumentReference wrapDoc = mStore.collection("Wraps").document("postId");
-        wrapDoc.get().addOnSuccessListener(documentSnapshot -> {
-            if (documentSnapshot.exists()) {
-                HashMap<String, Object> updatedData = new HashMap<String, Object>();
-                updatedData.put("Status", "public");
-                wrapDoc.update(updatedData);
-            } else {
-                Log.d("Document", "No such document");
-            }
-        }).addOnFailureListener(e -> Log.d("Document", "Failed with: ", e));
+        HashMap<String, Object> updatedData = new HashMap<String, Object>();
+        updatedData.put("Status", "public");
+        mStore.collection("Wraps").document(postId).update(updatedData);
     }
 }

@@ -26,6 +26,7 @@
         <activity
             android:name=".ProfilePageSearchPopOut"
             />
+        <activity android:name=".PublishPage"/>
         <activity
             android:name=".SpotifyWrappedPopUp"
             />
