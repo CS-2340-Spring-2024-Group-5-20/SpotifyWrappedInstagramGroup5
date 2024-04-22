@@ -10,8 +10,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.spotifywrappedinstagramgroup5.databinding.SpotifyWrappedAnotherPageBinding;
-import com.example.spotifywrappedinstagramgroup5.databinding.SpotifyWrappedGenrePageBinding;
-
 import java.util.ArrayList;
 import java.util.List;
 
