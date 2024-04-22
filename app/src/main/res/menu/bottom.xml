@@ -10,8 +10,8 @@
         android:title="Search" />
     <item
         android:id="@+id/post_button"
-        android:icon="@android:drawable/ic_menu_add"
-        android:title="Post" />
+        android:icon="@drawable/socials"
+        android:title="Socials" />
     <item
         android:id="@+id/profile_button"
         android:icon="@drawable/profile_button_select"

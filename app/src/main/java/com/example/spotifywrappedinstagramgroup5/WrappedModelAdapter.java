@@ -45,14 +45,14 @@ public class WrappedModelAdapter extends RecyclerView.Adapter<WrappedModelAdapte
         holder.imagePost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, SpotifyWrappedPopUp.class);
+                Intent intent = new Intent(context, SpotifyWrappedInitialPage.class);
                 intent.putExtra("userID", wrappedModel.getUserId());
                 intent.putExtra("description", wrappedModel.getDescription());
                 intent.putExtra("tracks", wrappedModel.getTracks());
                 intent.putExtra("artists", wrappedModel.getArtists());
                 intent.putExtra("genres", wrappedModel.getGenres());
                 context.startActivity(intent);
-                Toast.makeText(context.getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context.getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
             }
         });
         holder.commentButton.setOnClickListener(new View.OnClickListener() {
