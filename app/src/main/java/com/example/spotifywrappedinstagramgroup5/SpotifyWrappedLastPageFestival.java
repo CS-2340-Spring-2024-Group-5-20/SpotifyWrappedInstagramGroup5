@@ -67,20 +67,16 @@ public class SpotifyWrappedLastPageFestival extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = getIntent();
-                String userId = intent.getStringExtra("userID");
-                List<String> tracks = intent.getStringArrayListExtra("tracks");
-                List<String> artists = intent.getStringArrayListExtra("artists");
-                List<String> genres = intent.getStringArrayListExtra("genres");
-                Intent newIntent = new Intent(getApplicationContext(), SpotifyWrappedGenrePage.class);
-                // Put extras with the appropriate keys and values
-                newIntent.putExtra("userID", userId);
-                newIntent.putStringArrayListExtra("tracks", (ArrayList<String>) tracks);
-                newIntent.putStringArrayListExtra("artists", (ArrayList<String>) artists);
-                newIntent.putStringArrayListExtra("genres", (ArrayList<String>) genres);
-                // Start the new activity with the newIntent
-                startActivity(newIntent);
-               //finish();  // This will close the current activity and take you back to the previous one
+                Intent intent = new Intent(getApplicationContext(), HomePage.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);            }
+        });
+        ImageView backArrow = findViewById(R.id.back_arrow);
+
+        backArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();  // This will close the current activity and take you back to the previous one
             }
         });
 

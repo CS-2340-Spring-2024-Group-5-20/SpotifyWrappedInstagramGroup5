@@ -43,7 +43,7 @@ public class SpotifyWrappedGenrePage extends AppCompatActivity {
             if (genres != null && genres.size() >= 5) {
                 Toast.makeText(context.getApplicationContext(), "made it here", Toast.LENGTH_SHORT).show();
 
-                binding.genreSpot1.setText(userId);
+                binding.genreSpot1.setText(genres.get(0));
                 binding.genreSpot2.setText(genres.get(1));
                 binding.genreSpot3.setText(genres.get(2));
                 binding.genreSpot4.setText(genres.get(3));
@@ -72,6 +72,15 @@ public class SpotifyWrappedGenrePage extends AppCompatActivity {
         }
         ImageView backButton = findViewById(R.id.escape);
         backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), HomePage.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent); // This will close the current activity and take you back to the previous one
+            }
+        });
+        ImageView backArrow = findViewById(R.id.back_arrow);
+        backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();  // This will close the current activity and take you back to the previous one

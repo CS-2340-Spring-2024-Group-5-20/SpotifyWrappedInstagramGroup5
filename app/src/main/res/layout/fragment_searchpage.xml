@@ -27,7 +27,7 @@
                 android:id="@+id/search_button"
                 android:layout_marginTop="5dp"
                 android:padding="8dp"
-                android:hint="Search"
+                android:hint="Search for user"
                 android:drawablePadding="8dp"
                 android:background="@drawable/search_button_style"/>
 

@@ -9,11 +9,11 @@
 
     <ImageView
         android:id="@+id/escape"
-        android:layout_width="24dp"
+        android:layout_width="wrap_content"
         android:layout_height="24dp"
-        android:layout_marginStart="12dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/x_logo" />
+        android:src="@drawable/x_logo"
+        tools:layout_marginTop="60dp" />
 
     <Spinner
         android:id="@+id/postTitleSpinner"
@@ -37,7 +37,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="90dp"
         android:text="Select Wrap Title To Post" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

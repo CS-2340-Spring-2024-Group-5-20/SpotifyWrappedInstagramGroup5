@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/favgenrespage">
-
+    android:background="@drawable/simplistic_mountain">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -14,64 +13,63 @@
         android:layout_centerInParent="true">
 
         <TextView
-            android:id="@+id/user_festival_name"
+            android:id="@+id/favorite_artist_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/festival_font"
-            android:text="Favorite Genres"
+            android:text="Favorite Artists"
             android:textAlignment="center"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="35sp" />
 
         <!-- Text views for 5 genres -->
-
         <TextView
-            android:id="@+id/genre_spot_1"
+            android:id="@+id/artists_spot_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Genre 1"
+            android:text="Artist 1"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"/>
 
         <TextView
-            android:id="@+id/genre_spot_2"
+            android:id="@+id/artists_spot_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Genre 2"
+            android:text="Artist 2"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"/>
 
         <TextView
-            android:id="@+id/genre_spot_3"
+            android:id="@+id/artists_spot_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Genre 3"
+            android:text="Artist 3"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"/>
 
         <TextView
-            android:id="@+id/genre_spot_4"
+            android:id="@+id/artists_spot_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Genre 4"
+            android:text="Artist 4"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"/>
 
         <TextView
-            android:id="@+id/genre_spot_5"
+            android:id="@+id/artists_spot_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Genre 5"
+            android:text="Artist 5"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:layout_marginTop="8dp"
@@ -92,12 +90,12 @@
 
     <ImageView
         android:id="@+id/escape"
-        android:layout_width="52dp"
-        android:layout_height="50dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:src="@drawable/x_logo" />
 
     <ImageView

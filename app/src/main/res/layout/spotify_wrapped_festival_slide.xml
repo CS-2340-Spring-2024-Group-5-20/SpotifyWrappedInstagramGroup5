@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/spotifywrappedfest">
 
+    <!-- Escape Button -->
     <ImageView
         android:id="@+id/escape"
         android:layout_width="24dp"
@@ -14,27 +15,83 @@
         android:src="@drawable/x_logo" />
 
 
+    <!-- Artist LinearLayout -->
     <LinearLayout
-        android:id="@+id/linear_layout_artists"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-
-        <!-- Festival Name -->
-        <TextView
-            android:id="@+id/user_festival_name"
+        <LinearLayout
+            android:id="@+id/linear_layout_artists"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/festival_font"
-            android:text="Person's Name Music Festival"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="35sp" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <View
+
+            <!-- Festival Name -->
+            <TextView
+                android:id="@+id/user_festival_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/festival_font"
+                android:text="Person's Name Music Festival"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="35sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+
+            <!-- First Favorite Artist -->
+            <TextView
+                android:id="@+id/fest_artist_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/festival_font"
+                android:text="First Favorite Artist"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
+
+            <!-- Second Favorite Artist -->
+            <TextView
+                android:id="@+id/fest_artist_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/festival_font"
+                android:text="Second Favorite Artist"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="25sp" />
+
+            <!-- Third Favorite Artist -->
+            <TextView
+                android:id="@+id/fest_artist_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/festival_font"
+                android:text="Third Favorite Artist"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="23sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_layout_genre"
             android:layout_width="match_parent"
             android:layout_height="40dp" />
 
@@ -46,45 +103,114 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/festival_font"
-            android:text="First Favorite Artist"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="30sp" />
+            android:orientation="vertical">
 
-        <!-- Second Favorite Artist -->
-        <TextView
-            android:id="@+id/fest_artist_2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/festival_font"
-            android:text="Second Favorite Artist"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="25sp" />
+            <!-- First Favorite Artist's Favorite Song -->
 
-        <!-- Third Favorite Artist -->
-        <TextView
-            android:id="@+id/fest_artist_3"
+            <!-- Second Favorite Artist's Favorite Song -->
+            <TextView
+                android:id="@+id/fest_genre_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/festival_font"
+                android:text="Favorite Genre 1"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/fest_genre_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/festival_font"
+                android:text="Favorite Genre 2"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="25sp" />
+
+            <!-- Third Favorite Artist's Favorite Song -->
+            <TextView
+                android:id="@+id/fest_genre_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/festival_font"
+                android:text="Favorite Genre 3"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="23sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_layout_songs"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/festival_font"
-            android:text="Third Favorite Artist"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="23sp" />
+            android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="40dp" />
+            <!-- First Favorite Artist's Favorite Song -->
+            <TextView
+                android:id="@+id/fest_song_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/festival_font"
+                android:text="Favorite Song 1"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
 
+            <!-- Second Favorite Artist's Favorite Song -->
+            <TextView
+                android:id="@+id/fest_song_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/festival_font"
+                android:text="Favorite Song 2"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="25sp" />
+
+            <!-- Third Favorite Artist's Favorite Song -->
+            <TextView
+                android:id="@+id/fest_song_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/festival_font"
+                android:text="Favorite Song 3"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="23sp" />
+
+            <!-- Like Button -->
+            <ImageButton
+                android:id="@+id/LikeButton"
+                android:layout_width="94dp"
+                android:layout_height="81dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="139dp"
+                android:layout_marginEnd="297dp"
+                android:layout_marginBottom="20dp"
+                android:background="#00000000"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spotifyWrappedFavoriteGenres"
+                app:srcCompat="@drawable/secondcroppedandroidstudioheart_85x76" />
+
+        </LinearLayout>
     </LinearLayout>
 
     <!-- Add a gap between artists and songs -->

@@ -53,9 +53,9 @@ public class WrappedModelAdapter extends RecyclerView.Adapter<WrappedModelAdapte
                 Intent intent = new Intent(activity, SpotifyWrappedInitialPage.class); // Use 'activity' instead of 'context'
                 intent.putExtra("userID", wrappedModel.getUserId());
                 intent.putExtra("description", wrappedModel.getDescription());
-                intent.putExtra("tracks", wrappedModel.getTracks());
-                intent.putExtra("artists", wrappedModel.getArtists());
-                intent.putExtra("genres", wrappedModel.getGenres());
+                intent.putStringArrayListExtra("tracks", wrappedModel.getTrackList());
+                intent.putStringArrayListExtra("artists", wrappedModel.getArtistList());
+                intent.putStringArrayListExtra("genres", wrappedModel.getGenreList());
                 activity.startActivity(intent); // Use 'activity' instead of 'context'
             }
         });

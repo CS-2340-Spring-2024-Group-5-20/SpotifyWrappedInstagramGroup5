@@ -35,12 +35,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
             android:text="Post"
-            tools:layout_marginLeft="20dp" />
+            tools:layout_marginLeft="0" />
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="110dp"
+            android:layout_marginTop="130dp"
             tools:ignore="UselessParent">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -50,6 +50,12 @@
                 android:layout_below="@id/bottom_menu" />
 
         </ScrollView>
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="110dp" />
 
     </FrameLayout>
 
