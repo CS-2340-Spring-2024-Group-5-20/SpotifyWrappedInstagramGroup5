@@ -13,6 +13,21 @@
         android:theme="@style/Theme.SpotifyWrappedInstagramGroup5"
         tools:targetApi="31">
         <activity
+            android:name=".SpotifyWrappedLastPageFestival"/>
+        <activity android:name=
+            ".SpotifyWrappedGenrePage"/>
+        <activity
+            android:name=".SpotifyWrappedInitialPage"/>
+        <activity
+            android:name=".CommentPage"
+            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".ProfilePageSearchPopOut"
+            />
+        <activity
+            android:name=".SpotifyWrappedPopUp"
+            />
+        <activity
             android:name=".SignoutPage"
             android:exported="false" />
         <activity
@@ -23,6 +38,7 @@
             android:exported="false" />
         <activity android:name=".SearchPage" />
         <activity android:name=".HomePage" />
+        <activity android:name=".MyWraps" />
         <activity android:name=".PostPage" />
         <activity
             android:name=".ProfilePage"

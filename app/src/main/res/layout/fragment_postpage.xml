@@ -33,6 +33,7 @@
 
     <!-- Add your post content here -->
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="55dp"
@@ -44,22 +45,23 @@
         <EditText
             android:id="@+id/edit_text_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="38dp"
             android:layout_marginBottom="16dp"
             android:background="@color/white"
-            android:hint="Write something..."
-            android:padding="10dp"
-            android:textSize="16sp"
+            android:gravity="top"
+            android:hint="Enter title..."
             android:minLines="5"
-            android:gravity="top" />
-        <Button
-            android:id="@+id/button_add_media"
+            android:padding="10dp"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/timeframe_picker"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginBottom="16dp"
-            android:background="@android:color/white"
-            android:text="SPOTIFY WRAP GOES HERE IGNORE"
-            android:textColor="@android:color/white" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="#FBFBFB"
+            android:backgroundTint="#FBFBFB"
+            tools:textAlignment="center" />
 
         <!-- Post Button Box -->
         <Button

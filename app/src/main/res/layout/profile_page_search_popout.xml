@@ -10,17 +10,15 @@
     <!-- Top Menu -->
 
     <!-- Profile Stats -->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_menu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:visibility="visible"
-        app:itemBackground="@color/white"
-        android:layout_gravity="bottom"
-        app:itemHorizontalTranslationEnabled="true"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/bottom" />
+    <ImageView
+        android:id="@+id/profilePagePopUpBackButton"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/back_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -53,7 +51,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/username"
+                        android:id="@+id/profilePagePopUpUsername"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -61,22 +59,6 @@
                         android:text="Username"
                         android:textSize="18sp"
                         android:textStyle="bold" />
-
-                    <Button
-                        android:id="@+id/edit_profile_button"
-                        android:layout_marginStart="10dp"
-                        android:layout_width="141dp"
-                        android:layout_height="40dp"
-                        android:backgroundTint="@color/light_blue"
-                        android:text="Edit Profile" />
-
-                    <Button
-                        android:id="@+id/signout_button"
-                        android:layout_marginStart="10dp"
-                        android:layout_width="141dp"
-                        android:layout_height="40dp"
-                        android:backgroundTint="@color/light_blue"
-                        android:text="Sign Out" />
 
                 </LinearLayout>
 
@@ -92,7 +74,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/text_favorite_artist"
+                android:id="@+id/profilePagePopUpFavArtist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Taylor Swift, Ed Sheeran, Beyoncé"
@@ -108,17 +90,21 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/text_most_played"
+                android:id="@+id/profilePagePopUpMostPlayed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Shape of You, Roar, Uptown Funk"
                 android:textSize="16sp" />
 
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
             <Button
-                android:id="@+id/my_wrap_button"
-                android:layout_width="wrap_content"
+                android:id="@+id/followButton"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="My Wraps" />
+                android:text="Follow" />
 
 
         </LinearLayout>
@@ -126,7 +112,5 @@
     </FrameLayout>
 
     <!-- Bottom Menu -->
-
-    <include layout="@layout/profile_top" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
